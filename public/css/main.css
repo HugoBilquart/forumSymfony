@@ -1,0 +1,123 @@
+body {
+	background: 				url(../img/wallpaper.jpg) no-repeat center center fixed;
+    background-size: cover;
+    display:    				cover;
+	font-family:				main;
+	color: 						white;
+    margin: 					auto;
+}
+
+h1,h2,h3,span,li,p {
+    font-family:				main;
+}
+
+.container-fluid {
+    width: 						80%;
+    min-height:                 100%;
+}
+
+#content {
+    min-height:                 100%;
+}
+
+#footer {
+    background-color: 	    	#757575;
+    margin-top:                 0.2%;
+    padding:                    1%;
+    text-align: right;
+    text-shadow: 				1px 3px 3px #cecece;
+    color:                      white;
+}
+
+#footer a {
+    color:                      navy;
+    font-weight:                bold;
+    text-shadow:                none;
+    text-decoration:            none;
+}
+
+#footer a:hover {
+    color:                      rgb(0, 162, 255);
+    text-decoration:            none;
+}
+
+#top {
+    background-color: 			#757575;
+    margin-bottom:              0.2%;
+    height: 10em;
+}
+
+#login-data {
+    float: left;
+    text-align: right;
+    height: 100%;
+    margin: auto;
+}
+
+#login-data-text {
+    float: right;
+    text-align: left;
+    height: 100%;
+    margin-left: 1%;
+}
+
+#login-data-text th, #login-data-text td {
+    display: outline-block;
+    height: 33%;
+    margin: 2%;
+}
+
+#content {
+    background-color: 		#3B3A3F;
+	padding: 				2%;
+}
+
+#logo {
+    float: left;
+    text-align: left;
+    height: 100%;
+}
+
+#logo img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-right: solid green 0.1px;
+    height: 100%;
+}
+
+hr {
+    margin-left: 5px;
+	width: 80%;
+	height: 2px;
+	border-radius: 30px;
+	background-color: white;
+}
+
+#session_data {
+    height: 100%;
+}
+
+.session-pp {
+    height: 100%;
+}
+
+.member-role {
+    color:          darkcyan;
+    text-shadow:    0.5px 1px 5px blue;
+}
+
+.moderator-role {
+    color: limegreen;
+    text-shadow:    0.5px 1px 5px green;
+}
+
+.administrator-role {
+    color: darkred;
+    text-shadow:    0.5px 1px 5px brown;
+}
+
+@font-face {
+	font-family: 				"main";
+	src: 						url("../fonts/bankgthd-webfont.woff");
+}

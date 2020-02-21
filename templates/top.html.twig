@@ -1,0 +1,46 @@
+<div class="row" id="top">
+    <div class="col-xl-5" id="logo">
+        <img src="img/websiteLogo.png" alt="website-logo">
+    </div>
+    <div class="col-xl-7" id="login-data">
+        {% if app.user is null %}
+            <a href="{{ path("app_login") }}">
+                Login
+            </a>
+        {% else %}
+            {% dump(app.user) %}
+            {% dump(app.user.roles|last) %}
+            <a href="" title="Access to your profile page">
+                <img src="img/users/{{ app.user.username }}.png" alt="{{ app.user.username }}'s profile picture" class="session-pp">
+            </a>
+            <table id="login-data-text">
+                <tr>
+                    <th>
+                        <p>
+                            {{ app.user.username }}
+                        </p>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="{{ app.user.roleStr(app.user.roles|last) }}-role">
+                            <b>{{ app.user.roleStr(app.user.roles|last)| title }}</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{{ path('app_logout')}}" id="logout_link">
+                            <p>
+                                Logout
+                            </p>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            
+            
+            
+        {% endif %}
+    </div>
+</div>
