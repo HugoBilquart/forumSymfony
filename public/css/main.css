@@ -1,6 +1,6 @@
 body {
 	background: 				url(../img/wallpaper.jpg) no-repeat center center fixed;
-    background-size: cover;
+    background-size:            cover;
     display:    				cover;
 	font-family:				main;
 	color: 						white;
@@ -9,6 +9,14 @@ body {
 
 h1,h2,h3,span,li,p {
     font-family:				main;
+}
+
+.success {
+    color: green;
+}
+
+.failed {
+    color: red;
 }
 
 .container-fluid {
@@ -38,7 +46,14 @@ h1,h2,h3,span,li,p {
 
 #footer a:hover {
     color:                      rgb(0, 162, 255);
+    text-shadow:                0.5px 1px 5px blue;
     text-decoration:            none;
+}
+
+#footer a:focus {
+    color:                      rgb(0, 162, 255);
+    text-shadow:                0.5px 1px 5px blue;
+    text-decoration:            underline overline;
 }
 
 #top {
@@ -52,6 +67,25 @@ h1,h2,h3,span,li,p {
     text-align: right;
     height: 100%;
     margin: auto;
+    vertical-align: middle;
+}
+
+#logout-link {
+    color: red;
+    font-weight: bold;
+    text-decoration: none;
+    transition-duration: 0.5s;
+}
+
+#logout-link:hover {
+    color: darkred;
+    text-shadow: 0.5px 1px 5px brown;
+}
+
+#logout-link:focus {
+    color: darkred;
+    text-shadow: 0.5px 1px 5px brown;
+    text-decoration: underline overline;
 }
 
 #login-data-text {
@@ -76,14 +110,23 @@ h1,h2,h3,span,li,p {
     float: left;
     text-align: left;
     height: 100%;
+    
 }
 
 #logo img {
     position: absolute;
     top: 0;
     left: 0;
+    border-left: solid blue 0.1px;
     border-right: solid green 0.1px;
     height: 100%;
+    transition-duration: 0.5s;
+}
+
+#logo a:focus img {
+    border-left: solid cyan 3px;
+    border-right: solid cyan 3px;
+    opacity: 0.5;
 }
 
 hr {
@@ -96,6 +139,16 @@ hr {
 
 #session_data {
     height: 100%;
+}
+
+#session-profile-access img {
+    height: 100%;
+    transition-duration: 0.5s;
+}
+
+#session-profile-access:focus img {
+    border: solid 3px cyan;
+    opacity: 0.5;
 }
 
 .session-pp {

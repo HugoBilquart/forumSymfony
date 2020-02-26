@@ -20,6 +20,8 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+use Symfony\Component\VarDumper\VarDumper;
+
 class LoginAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
@@ -93,6 +95,14 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
+
+        //Get authentified user
+        $user = $token->getUser();
+
+        //Edit last login date
+        $user->setLastLogin(new \DateTime());
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         return new RedirectResponse($this->urlGenerator->generate('home'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IT Solutions - Registration{% endblock %}
+
+{% block body %}
+<div class="col-md-12">
+	<h1>Registration page</h1>
+</div>
+<br/>
+<div class="col-md-8" id="registration-form">
+	{{ form_start(form) }}
+	{{ form_rest(form) }}
+	<p class="failed">WARNING ! Your password is crypted and can't be recovered if you forget it</p>
+	<input type="submit" class="btn btn-primary" value="Register">
+	{{ form_errors(form) }}
+	{{ form_end(form) }}
+</div>
+    
+{% endblock %}
