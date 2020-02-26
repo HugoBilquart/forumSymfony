@@ -54,6 +54,11 @@ class User implements UserInterface
     private $biography;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $signature;
+
+    /**
      * @ORM\Column(type="date")
      */
     private $registration_date;
@@ -189,6 +194,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getSignature(): ?string
+    {
+        return $this->signature;
+    }
+
+    public function setSignature(?string $signature): self
+    {
+        $this->signature = $signature;
+
+        return $this;
+    }
+
     public function getRegistrationDate(): ?\DateTimeInterface
     {
         return $this->registration_date;
@@ -239,5 +256,67 @@ class User implements UserInterface
                 return 'administrator';
                 break;
         }
+    }
+
+    public function getLastLoginStr($last) {
+        $now = new \DateTime();
+
+        $difference = date_diff($last,$now);
+
+        if($difference->format('%y') >= 1) {
+            if($difference->format('%y') == 1) {
+                $diff = $difference->format('%y')." year";
+            }
+            else {
+                $diff = $difference->format('%y')." years";
+            }
+        }
+        else if($difference->format('%i') < 1) {
+            $diff = "Just now";
+        }
+        else if($difference->format('%h') < 1) {
+            if($difference->format('%m') == 1) {
+                $diff = $difference->format('%i')." minute";
+            }
+            else {
+                $diff = $difference->format('%i')." minutes";
+            }
+        }
+        else if($difference->format('%d') < 1) {
+            if($difference->format('%h') == 1) {
+                $diff = $difference->format('%h')." hour";
+            }
+            else {
+                $diff = $difference->format('%h')." hours";
+            }
+        }
+        else if($difference->format('%m') < 1) {
+            if($difference->format('%d') == 1) {
+                $diff = $difference->format('%d')." day";
+            }
+            else {
+                $diff = $difference->format('%d')." days";
+            }
+        }
+        else if($difference->format('%y') < 1) {
+            if($difference->format('%m') == 1) {
+                $diff = $difference->format('%m')." month";
+            }
+            else {
+                $diff = $difference->format('%m')." months";
+            }
+        }
+        return $diff;
+    }
+
+    public function createAvatarFile($username) {
+        $file = 'img/users/default.png';
+		$newfile = 'img/users/'.$username.'.png';
+		if (!copy($file, $newfile)) {
+    		echo "<p class='failed'>Failed to create new user avatar\n</p>";
+		}
+		else {
+			return $newfile;
+		}
     }
 }

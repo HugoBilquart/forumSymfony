@@ -3,9 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="img/favicon.png" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/user.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/register.css') }}">
+        <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>

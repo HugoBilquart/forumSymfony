@@ -1,0 +1,109 @@
+/* Memberlist */
+
+table.table-memberlist {
+	margin: 					auto;
+
+	width:                      90%;
+
+    font-family:				main, Arial;
+    
+    text-align: 				center;
+}
+
+#users tbody tr:hover {
+	background-color: rgb(110, 110, 110);
+}
+
+#users tbody tr:focus {
+	background-color: rgb(110, 110, 110);
+	border-left: solid 2px white;
+	border-right: solid 2px white;
+}
+
+table.table-memberlist tbody tr th:first-child {
+    text-align: left;
+    text-indent: 10%;
+}
+
+a.memberlist-namelink {
+	text-decoration: none;
+	font-weight: bold;
+	color: white;
+	transition-property:   color;
+    transition-duration:   0.5s;
+}
+
+a.filterLink {
+	font-size: large;
+	color:	white;
+	text-decoration: none;
+	transition-property:   color;
+	transition-duration:   0.5s;
+}
+
+a.filterLink:hover, a.memberlist-namelink:hover {
+	color:	cyan;
+	text-decoration: none;
+}
+
+img.memberlist-picture {
+	height: 					50px;
+	width: 						50px;
+}
+
+/* END Memberlist */
+
+/* START Profile page */
+
+.profile-page {
+	background-color: 		#3B3A3F;
+}
+
+#details li {
+	border: none;
+	background-color: 		#3B3A3F;
+
+	padding: 5%;
+}
+
+.profile-page span.role {
+	font-size: 		20px;
+	font-weight: 	bold;
+}
+
+.profile-page li.detail::before {
+	content: "▶ ";
+	color: cyan;
+}
+
+.profile-page img#profile-pic {
+	width:						100%;
+	height:						100%;
+}
+
+.info-title {
+	text-align: center;
+}
+
+.info-title span {
+	padding: 1%;
+}
+
+.empty-detail {
+	color: 			rgba(120,120,120,0.5);
+}
+
+.biography, .signature {
+	padding: 2%;
+	text-indent: 2%;
+}
+
+.signature p {
+	border: solid white;
+}
+
+a#username {
+	cursor: 		pointer;
+}
+
+/* END Profile page */

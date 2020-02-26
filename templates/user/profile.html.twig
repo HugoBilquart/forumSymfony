@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if data == app.user %}
+        IT Solutions - Your profile page
+    {% else %}
+        IT Solutions - {{ data.username }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="col-sm-12">
+        {% if data == app.user %}
+            <h1 class="page_name">Your profile page</h1>
+        {% else %}
+            <h1 class="page_name">Profile page of {{ data.username }}</h1>
+        {% endif %}
+    </div>
+
+    <div class="col-sm-6 profile-page border">
+        <div class="row bg-dark dark info-title">
+			<span>Global statistics</span>
+		</div>
+        <div class="row">
+			<div class="col-sm-6 border">
+				<img src="{{ asset('img/users/'~data.username~'.png')}}" alt="img/users/{{ data.username }}.png" id="profile-pic">
+			</div>
+			<div class="col-sm-6 border">
+				<ul class="list-group" id="details">
+					<li class="list-group-item">
+						<h2 class="name">{{ data.username }}</h2>
+					</li>
+					<li class="list-group-item">
+						<span class="{{ data.roleStr(data.roles|last) }}-role role">
+							{{ data.roleStr(data.roles|last)| title }}
+						</span>
+					</li>
+					<li class="list-group-item detail">
+						<span class="personal_page">
+							Registered since {{ data.registrationDate | date('d/m/Y')}}
+						</span>
+					</li>
+					<li class="list-group-item detail">
+						<span class="personal_page">
+							From 
+                            {% if data.country is null %}
+                                <i class="empty-detail">undefined</i>
+                            {% else %}
+                                {{ data.country }}
+                            {% endif %}
+						</span>
+					</li>
+					<li class="list-group-item detail">
+						<span class="personal_page">
+							Birth date : 
+                            {% if data.birthDate is null %}
+                                <i class="empty-detail">undefined</i>
+                            {% else %}
+                                {{ data.birthDate|date('d/m/Y') }}
+                            {% endif %}
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+    </div>
+
+    <div class="col-sm-1"></div>
+
+	<div class="col-sm-5">
+		<div class="row bg-dark info-title border">
+			<span>Biography</span>		
+		</div>
+		<div class="row biography border">
+			<div class="col-sm-12">
+                {% if data == app.user %}
+                    {% if data.biography is null %}
+                        <i class="empty-detail">Introduce yourself in some words...</i>
+                    {% else %}
+                        <p>{{ data.biography }}</p>
+                    {% endif %}
+                {% else %}
+                    {% if data.biography is null %}
+                        <i class="empty-detail">No biography</i>
+                    {% else %}
+                        <p>{{ data.biography }}</p>
+                    {% endif %}
+                {% endif %}
+			</div>		
+		</div>
+		<br/>
+
+		<div class="row bg-dark info-title border">
+			<span>Signature</span>		
+		</div>
+		<div class="row signature border">
+			<div class="col-sm-12">
+                {% if data == app.user %}
+                    {% if data.signature is null %}
+                        <i class="empty-detail">Write a message that will appear at the end of your messages...</i>
+                    {% else %}
+                        <span>{{ data.signature }}</span>
+                    {% endif %}
+                {% else %}
+                    {% if data.signature is null %}
+                        <i class="empty-detail">No signature</i>
+                    {% else %}
+                         <span>{{ data.signature }}</span>
+                    {% endif %}
+                {% endif %}
+			</div>	
+		</div>
+	</div>
+
+    {% if app.user is not null and data == app.user %}
+        <hr>
+        <div class="col-sm-12">
+            <a href="{{ path('editProfileDetails',{id: app.user.id}) }}" class="btn btn-primary">Edit profile details</a>
+        </div>
+    {% endif %}
+{% endblock %}

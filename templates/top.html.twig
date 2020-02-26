@@ -1,17 +1,24 @@
 <div class="row" id="top">
     <div class="col-xl-5" id="logo">
-        <img src="img/websiteLogo.png" alt="website-logo">
+        <a href="{{ path("home") }}">
+            <img src="{{ asset('img/websiteLogo.png')}}" alt="website-logo">
+        </a>
     </div>
     <div class="col-xl-7" id="login-data">
         {% if app.user is null %}
-            <a href="{{ path("app_login") }}">
-                Login
-            </a>
+            <p>
+                You're not logged 
+                <a href="{{ path("app_login") }}" class="btn btn-primary" id="login-btn">Login</a>
+            </p>
+            <p>
+                No account ? 
+                <a href="{{ path("register") }}" class="btn btn-primary" id="login-btn">Join us</a>
+            </p>
         {% else %}
             {% dump(app.user) %}
             {% dump(app.user.roles|last) %}
-            <a href="" title="Access to your profile page">
-                <img src="img/users/{{ app.user.username }}.png" alt="{{ app.user.username }}'s profile picture" class="session-pp">
+            <a href="{{ path('profile', {id: app.user.id}) }}" title="Access to your profile page" id="session-profile-access">
+                <img src="{{ asset('img/users/'~app.user.username~'.png')}}" alt="{{ app.user.username }}'s profile picture" class="session-pp">
             </a>
             <table id="login-data-text">
                 <tr>
@@ -30,7 +37,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="{{ path('app_logout')}}" id="logout_link">
+                        <a href="{{ path('app_logout')}}" id="logout-link">
                             <p>
                                 Logout
                             </p>
