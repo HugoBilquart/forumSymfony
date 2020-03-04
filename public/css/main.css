@@ -1,7 +1,6 @@
 body {
 	background: 				url(../img/wallpaper.jpg) no-repeat center center fixed;
     background-size:            cover;
-    display:    				cover;
 	font-family:				main;
 	color: 						white;
     margin: 					auto;
@@ -110,7 +109,12 @@ h1,h2,h3,span,li,p {
     float: left;
     text-align: left;
     height: 100%;
-    
+}
+
+#logo a {
+    color: turquoise;
+    font-weight: bold;
+    text-align: center;
 }
 
 #logo img {
@@ -121,6 +125,10 @@ h1,h2,h3,span,li,p {
     border-right: solid green 0.1px;
     height: 100%;
     transition-duration: 0.5s;
+}
+
+#logo a:hover img {
+    box-shadow:    0.5px 1px 5px white;
 }
 
 #logo a:focus img {
@@ -146,6 +154,11 @@ hr {
     transition-duration: 0.5s;
 }
 
+#session-profile-access:hover img {
+    border: solid 0.5px cyan;
+    opacity: 0.5;
+}
+
 #session-profile-access:focus img {
     border: solid 3px cyan;
     opacity: 0.5;
@@ -169,6 +182,78 @@ hr {
     color: darkred;
     text-shadow:    0.5px 1px 5px brown;
 }
+
+/** MENU **/
+
+#menu nav {
+    margin: 0;
+    width: 100%;
+    background-color: teal;
+    border-bottom: solid 5px rgb(0, 100, 100);
+}
+
+#menu nav a {
+    color: white;
+}
+
+#menu nav img {
+    filter: drop-shadow(0 0 2rem black);
+}
+
+#homepage-link {
+    padding: 2%;
+    position: absolute;
+    left: 0;
+}
+
+#menu-links li {
+    height: 100%;
+    border-bottom: solid 5px teal;
+    border-collapse: collapse;
+}
+
+/*#menu-links li:hover {
+    border-bottom: solid 5px red;
+    background-color: cyan;
+}
+
+#menu-links li:focus li {
+    border-bottom: solid 5px red;
+    background-color: cyan;
+}*/
+
+/** END MENU **/
+
+/** START Homepage **/
+
+#birthdays ul {
+    list-style-type: none;
+}
+
+#birthdays li {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+#birthdays a {
+    text-decoration: underline;
+    transition-duration: 0.5s;
+}
+
+#birthdays a:focus, #birthdays a:hover {
+    color: cyan;
+    text-shadow:    0.5px 1px 2px turquoise;
+}
+
+#birthdays .birthday-pp {
+    width: 5%;
+}
+
+.no-birthday {
+    color: gray;
+}
+
+/** END Homepage **/
 
 @font-face {
 	font-family: 				"main";

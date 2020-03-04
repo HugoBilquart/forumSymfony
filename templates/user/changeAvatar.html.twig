@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IT Solutions - Change Avatar{% endblock %}
+
+{% block body %}
+<div class="col-md-12">
+	<h1>Change your avatar</h1>
+</div>
+<br/>
+<div class="col-md-12" id="avatar-form">
+	{{ form_start(form) }}
+	{{ form_rest(form) }}
+	{{ form_errors(form) }}
+	{{ form_end(form) }}
+</div>
+<script>
+    $('#avatar_file').change(function(){
+		if(this.files[0].size > 1050000) {
+			alert("Image too large (max 1.5 Mo)");
+			$(this).val('')
+		}	
+	});
+</script>
+    
+{% endblock %}

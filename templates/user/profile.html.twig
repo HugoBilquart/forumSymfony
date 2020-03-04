@@ -113,9 +113,12 @@
 	</div>
 
     {% if app.user is not null and data == app.user %}
-        <hr>
-        <div class="col-sm-12">
+        
+        <div class="col-sm-12" id="editProfileButtons">
+            <hr>
+            <br/>
             <a href="{{ path('editProfileDetails',{id: app.user.id}) }}" class="btn btn-primary">Edit profile details</a>
+            <a href="{{ path('changeAvatar',{id: app.user.id}) }}" class="btn btn-primary">Change avatar</a>
         </div>
     {% endif %}
 {% endblock %}

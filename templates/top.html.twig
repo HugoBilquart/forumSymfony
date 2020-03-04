@@ -1,7 +1,7 @@
 <div class="row" id="top">
     <div class="col-xl-5" id="logo">
-        <a href="{{ path("home") }}">
-            <img src="{{ asset('img/websiteLogo.png')}}" alt="website-logo">
+        <a href="{{ path("home") }}" title="Homepage">
+            <img src="{{ asset('img/websiteLogo.png')}}" alt="IT Solutions">
         </a>
     </div>
     <div class="col-xl-7" id="login-data">
@@ -15,8 +15,6 @@
                 <a href="{{ path("register") }}" class="btn btn-primary" id="login-btn">Join us</a>
             </p>
         {% else %}
-            {% dump(app.user) %}
-            {% dump(app.user.roles|last) %}
             <a href="{{ path('profile', {id: app.user.id}) }}" title="Access to your profile page" id="session-profile-access">
                 <img src="{{ asset('img/users/'~app.user.username~'.png')}}" alt="{{ app.user.username }}'s profile picture" class="session-pp">
             </a>

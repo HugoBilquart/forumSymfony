@@ -10,12 +10,9 @@ table.table-memberlist {
     text-align: 				center;
 }
 
-#users tbody tr:hover {
-	background-color: rgb(110, 110, 110);
-}
-
-#users tbody tr:focus {
-	background-color: rgb(110, 110, 110);
+#users tbody tr:focus, #users tbody tr:hover {
+	background-color: rgb(90, 90, 90);
+	text-shadow: 		0.5px 1px 5px white;
 	border-left: solid 2px white;
 	border-right: solid 2px white;
 }
@@ -77,8 +74,7 @@ img.memberlist-picture {
 }
 
 .profile-page img#profile-pic {
-	width:						100%;
-	height:						100%;
+	width:	100%;
 }
 
 .info-title {
@@ -104,6 +100,15 @@ img.memberlist-picture {
 
 a#username {
 	cursor: 		pointer;
+}
+
+#editProfileButtons {
+	text-align: center;
+	margin: 2%;
+}
+
+#editProfileButtons hr {
+	margin: auto;
 }
 
 /* END Profile page */

@@ -64,4 +64,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+    public function birthdays($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.birth_date LIKE :val')
+            ->setParameter('val', '%'.$value)
+            ->orderBy('u.birth_date', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
