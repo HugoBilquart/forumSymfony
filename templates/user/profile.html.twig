@@ -2,6 +2,7 @@
 
 {% block title %}
     {% if data == app.user %}
+        {% set data = app.user %}
         IT Solutions - Your profile page
     {% else %}
         IT Solutions - {{ data.username }}
@@ -9,14 +10,31 @@
 {% endblock %}
 
 {% block body %}
-    <div class="col-sm-12">
+    <!-- Breadcrumb -->
+    <div class="col-sm-12" id="breadcrumb">
+        <a href="{{ path('home') }}"><span>Home</span></a>
+        >
+        <a href="{{ path('users') }}"><span>Users</span></a>
+        >
         {% if data == app.user %}
-            <h1 class="page_name">Your profile page</h1>
+            <span class="current-page">You</span>
         {% else %}
-            <h1 class="page_name">Profile page of {{ data.username }}</h1>
+            <span class="current-page">{{ data.username }} [#{{data.id}}]</span>
         {% endif %}
     </div>
+    <!-- END Breadcrumb -->
 
+    <!-- Page title -->
+    <div class="col-sm-12">
+        {% if data == app.user %}
+            <h1 class="page-name">Your profile page</h1>
+        {% else %}
+            <h1 class="page-name">Profile page of {{ data.username }}</h1>
+        {% endif %}
+    </div>
+    <!-- END Page title -->
+
+    <!-- Global informations (Left part) -->
     <div class="col-sm-6 profile-page border">
         <div class="row bg-dark dark info-title">
 			<span>Global statistics</span>
@@ -64,10 +82,13 @@
 			</div>
 		</div>
     </div>
+    <!-- END Global informations -->
 
-    <div class="col-sm-1"></div>
+    <div class="col-sm-1"><!-- Vertical spacing --></div>
 
+    <!-- Details (Right part) -->
 	<div class="col-sm-5">
+        <!-- Biography -->
 		<div class="row bg-dark info-title border">
 			<span>Biography</span>		
 		</div>
@@ -88,8 +109,11 @@
                 {% endif %}
 			</div>		
 		</div>
+        <!-- END Biography -->
+
 		<br/>
 
+        <!-- Signature -->
 		<div class="row bg-dark info-title border">
 			<span>Signature</span>		
 		</div>
@@ -110,15 +134,18 @@
                 {% endif %}
 			</div>	
 		</div>
+        <!-- END Signature -->
 	</div>
+    <!-- END Details -->
 
     {% if app.user is not null and data == app.user %}
-        
+        <!-- Edit profile buttons -->
         <div class="col-sm-12" id="editProfileButtons">
             <hr>
             <br/>
             <a href="{{ path('editProfileDetails',{id: app.user.id}) }}" class="btn btn-primary">Edit profile details</a>
             <a href="{{ path('changeAvatar',{id: app.user.id}) }}" class="btn btn-primary">Change avatar</a>
         </div>
+        <!-- END Edit profile buttons -->
     {% endif %}
 {% endblock %}

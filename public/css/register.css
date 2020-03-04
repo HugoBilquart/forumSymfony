@@ -45,3 +45,37 @@ form[name="register"] div {
 #avatar-form button[type="submit"] {
     margin: 2%;
 }
+
+/*********************************************/
+
+#pdetails-form {
+    margin: auto;
+    text-align: center;
+}
+
+#pdetails-form form {
+    margin: 2%;
+    text-align: left;
+}
+
+#pdetails-form div {
+    margin: 2%;
+}
+
+#pdetails-form label {
+    display: inline;
+}
+
+#pdetails-form input, #pdetails-form select {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#pdetails-form textarea {
+    resize: 		none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#pdetails-form button[type="submit"] {
+    text-align: center;
+    margin: 2%;
+}

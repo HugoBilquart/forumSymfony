@@ -18,6 +18,14 @@ h1,h2,h3,span,li,p {
     color: red;
 }
 
+.page-name {
+	font-family:	main;
+	color:			white;
+
+    padding-top:    2%;
+    padding-bottom: 2%;
+}
+
 .container-fluid {
     width: 						80%;
     min-height:                 100%;
@@ -25,6 +33,7 @@ h1,h2,h3,span,li,p {
 
 #content {
     min-height:                 100%;
+    position: relative;
 }
 
 #footer {
@@ -169,8 +178,8 @@ hr {
 }
 
 .member-role {
-    color:          darkcyan;
-    text-shadow:    0.5px 1px 5px blue;
+    color:          darkblue;
+    text-shadow:    0.5px 1px 5px darkcyan;
 }
 
 .moderator-role {
@@ -223,6 +232,42 @@ hr {
 }*/
 
 /** END MENU **/
+
+/** START Breadcrumb **/
+
+#breadcrumb {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    height: 100%;
+    padding: 0.5%;
+    text-indent: 0.5%;
+    vertical-align: top;
+}
+
+#breadcrumb img {
+    width: 1%;
+    vertical-align: middle;
+}
+
+#breadcrumb .current-page {
+    color: darkgray;
+    font-weight: bold;
+}
+
+#breadcrumb a {
+    color: cyan;
+    vertical-align: top;
+    text-decoration: underline;
+}
+
+#breadcrumb a:hover, #breadcrumb a:focus {
+    color: white;
+    text-decoration: none;
+}
+
+/** END Breadcrumb **/
 
 /** START Homepage **/
 

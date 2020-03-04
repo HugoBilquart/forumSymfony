@@ -1,51 +1,69 @@
 /* Memberlist */
 
 table.table-memberlist {
-	margin: 					auto;
+	margin: 		auto;
 
-	width:                      90%;
+	margin-top: 	2%;
 
-    font-family:				main, Arial;
+	width: 			90%;
+
+    font-family:	main, Arial;
     
-    text-align: 				center;
+	text-align: 	center;
+	
+	border-left: 	solid 2px transparent;
+	border-right: 	solid 2px transparent;
+
+	vertical-align: middle;
 }
 
 #users tbody tr:focus, #users tbody tr:hover {
 	background-color: rgb(90, 90, 90);
 	text-shadow: 		0.5px 1px 5px white;
-	border-left: solid 2px white;
-	border-right: solid 2px white;
+	border-left: 		solid 2px white;
+	border-right: 		solid 2px white;
+}
+
+#users tbody tr:focus .online, #users tbody tr:hover .online {
+	text-shadow: 		0.5px 1px 5px rgb(0, 150, 0);
 }
 
 table.table-memberlist tbody tr th:first-child {
-    text-align: left;
-    text-indent: 10%;
+    text-align: 	left;
+    text-indent: 	10%;
 }
 
 a.memberlist-namelink {
-	text-decoration: none;
-	font-weight: bold;
-	color: white;
-	transition-property:   color;
-    transition-duration:   0.5s;
+	text-decoration: 		none;
+	font-weight: 			bold;
+	color: 					white;
+	transition-property:   	color;
+    transition-duration:   	0.5s;
 }
 
 a.filterLink {
-	font-size: large;
-	color:	white;
-	text-decoration: none;
-	transition-property:   color;
-	transition-duration:   0.5s;
+	font-size: 				large;
+	color:					white;
+	text-decoration: 		none;
+	transition-property:   	color;
+	transition-duration:   	0.5s;
 }
 
 a.filterLink:hover, a.memberlist-namelink:hover {
-	color:	cyan;
-	text-decoration: none;
+	color:				cyan;
+	text-decoration:	none;
 }
 
 img.memberlist-picture {
 	height: 					50px;
 	width: 						50px;
+
+	/*height: 					10%;
+	width: 						10%;*/
+}
+
+.online {
+	color: rgb(0, 211, 0);
 }
 
 /* END Memberlist */

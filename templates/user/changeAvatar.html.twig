@@ -3,6 +3,18 @@
 {% block title %}IT Solutions - Change Avatar{% endblock %}
 
 {% block body %}
+<!-- Breadcrumb -->
+<div class="col-sm-12" id="breadcrumb">
+	<a href="{{ path('home') }}"><span>Home</span></a>
+	>
+	<a href="{{ path('users') }}"><span>Users</span></a>
+	>
+	<a href="{{ path('profile', {id: app.user.id}) }}"><span>You</span></a>
+	>
+	<span class="current-page">Change avatar</span>
+</div>
+<!-- END Breadcrumb -->
+
 <div class="col-md-12">
 	<h1>Change your avatar</h1>
 </div>

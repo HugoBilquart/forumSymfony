@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\User;
 use App\Repository\UserRepository;
 
+use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 
 use App\Form\RegisterType;
@@ -19,6 +21,7 @@ use App\Form\AvatarType;
 use App\Form\EditProfileDetailsType;
 
 use App\Service\UserFunctions;
+use Doctrine\ORM\EntityManager;
 
 class UserController extends AbstractController
 {
@@ -46,16 +49,21 @@ class UserController extends AbstractController
     /**
      * @Route("/editProfile/details/{id}", name="editProfileDetails")
      */
-    public function details(User $user, Request $request)
+    public function details(User $user, Request $request, EntityManagerInterface $manager)
     {
         if($this->getUser() && $this->getUser() == $user) {
             $form = $this->createForm(EditProfileDetailsType::class, $user);
             $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()){
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+                $loggedUser = $this->getUser();
+                $loggedUser->setBirthDate($form->get('birth_date')->getData());
+                $loggedUser->setCountry($form->get('country')->getData());
+                $loggedUser->setBiography($form->get('biography')->getData());
+                $loggedUser->setSignature($form->get('signature')->getData());
+
+                $manager->persist($loggedUser);
+                $manager->flush();
     
                 return $this->redirectToRoute('profile', array(
                     'id' => $user->getId(),
