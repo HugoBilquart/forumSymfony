@@ -1,3 +1,28 @@
+form div {
+    margin: 2%;
+}
+
+form label {
+    display: inline;
+    float: left;
+}
+
+form input {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#login-form {
+    margin: auto;
+    text-align: center;
+}
+
+#login-form form {
+    width: 60%;
+    margin: auto;
+}
+
+/*********************************************/
+
 #registration-form {
     margin: auto;
     text-align: center;
@@ -11,10 +36,6 @@
     text-align: center;
 }
 
-#registration-form label {
-    display: inline;
-}
-
 #registration-form hr {
     margin: auto;
 }
@@ -23,7 +44,7 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-form[name="register"] div {
+#registration-form div {
     margin: 2%;
     text-align: left;
 }
@@ -60,10 +81,6 @@ form[name="register"] div {
 
 #pdetails-form div {
     margin: 2%;
-}
-
-#pdetails-form label {
-    display: inline;
 }
 
 #pdetails-form input, #pdetails-form select {
