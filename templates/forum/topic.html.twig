@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IT Solutions - Memberlist{% endblock %}
+
+{% block body %}
+
+{% dump(topic) %}
+{% dump(messages) %}
+
+<!-- Breadcrumb -->
+<div class="col-sm-12" id="breadcrumb">
+    <a href="{{ path('home') }}"><span>Home</span></a>
+    >
+    <a href="{{ path('forum') }}"><span>Forum</span></a>
+    >
+    <span>{{ topic.name }} [#{{ topic.id }}]</span>
+</div>
+<!-- END Breadcrumb -->
+
+<div class="col-xl-12">
+    <h1 class="page-name">{{ topic.name }}</h1>
+</div>
+
+{% for message in messages %}
+    <div class="col-xl-12 message">
+        <div class="row">
+            <div class="col-md-3 message-user" style="border: solid 1px white">
+                <img src="{{ asset('img/users/'~message.username~'.png')}}" alt="{{ message.username }}'s profile picture">
+                <p class="message-username">
+                    {{ message.username }} 
+                    <span class="message-role {{ message.roles }}-role">
+                        <b>{{ message.roles | title }}</b>
+                    </span>
+                </p>
+                <p>{{ message.publicationDate | date('d/m/Y H:i:s') }}</p>
+            </div>
+            <div class="col-md-9 message-body" style="border: solid 1px white; width: 100%;">
+                <div class="message-content">
+                    <p>{{ message.content }}</p>
+                </div>
+                <div class="message-signature">
+                    <p>{{ message.signature }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endfor %}
+<div class="col-xl-12 message" id="new-message">
+    {% if app.user is null %}
+        <div class="bg-danger" id="no-new-message">
+            <p class="no-form">You must be logged to write message</p>
+        </div>
+    {% elseif app.user.isMuted == 1 %}
+        <div class="bg-danger" id="no-new-message">
+            <p class="no-form">You can't publish message if you're muted</p>
+        </div>
+    {% elseif topic.complete == 1 %}
+        <div class="bg-danger" id="no-new-message">
+            <p class="no-form">This topic is completed</p>
+        </div>
+    {% else %}
+        <div id="new-message-form">
+            {{ form_start(form) }}
+            <label for="new_message_content" class="required">NEW MESSAGE : {{ topic.name }}</label>
+            {{ form_errors(form) }}
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

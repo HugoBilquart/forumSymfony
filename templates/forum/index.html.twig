@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IT Solutions - Forum{% endblock %}
+
+{% block body %}
+
+{% dump(topics) %}
+
+<!-- Breadcrumb -->
+<div class="col-sm-12" id="breadcrumb">
+    <a href="{{ path('home') }}"><span>Home</span></a>
+    >
+    <span>Forum</span>
+</div>
+<!-- END Breadcrumb -->
+
+<div class="col-xl-12">
+    <h1 class="page-name">Forum</h1>
+</div>
+
+<div class="col-xl-12">
+    <span>Every topics</span>
+</div>
+
+<div class="col-xl-12 table-responsive-xl text-nowrap">
+    <table class="table table-list" id="topics">
+        <thead>
+            <tr>
+                <th scope="col"><a href="" class="filterLink">Topic name</a></th>
+                <th scope="col"><a href="" title="Order by name" class="filterLink">Author</a></th>
+                <th scope="col"><a href="" title="Order by role" class="filterLink">Number of messages</a></th>
+                <th scope="col">Last message</th>
+            </tr>
+        </head>
+        <tbody>
+            {% for topic in topics %}
+                <tr data-id="{{ topic.id }}" tabindex="0">
+                    <th scope="row">
+                        <!--img src="{{ asset('img/icons/folder.png') }}" alt="📁" class="topic-folder"-->
+                        📁 {{ topic.name }} [#{{topic.id}}]
+                    </th>
+                    <td>
+                        <p>
+                            {{ topic.username }}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{ topic.countMessage }}
+                        </p>
+                    </td>
+                    <td>
+                        {{ topic.lastMessage|date('d/m/Y H:i:s') }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $('#topics > tbody > tr').click(function() {
+        window.location.href = "forum/topic/" + $(this).data("id");
+	});
+</script>
+{% endblock %}

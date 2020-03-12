@@ -1,0 +1,134 @@
+/** Forum **/
+
+table.table-list {
+	margin: 		auto;
+
+	margin-top: 	2%;
+
+	width: 			90%;
+
+    font-family:	main, Arial;
+    
+	text-align: 	center;
+	
+	border-left: 	solid 2px transparent;
+	border-right: 	solid 2px transparent;
+
+	vertical-align: middle;
+}
+
+#topics tbody {
+    color: white;
+    vertical-align: middle;
+}
+
+#topics .topic-folder {
+    width: 10%;
+    padding-right: 5%;
+}
+
+#topics tbody tr:focus, #topics tbody tr:hover {
+	background-color: 	rgb(90, 90, 90);
+	text-shadow: 		0.5px 1px 5px white;
+	border-left: 		solid 2px white;
+	border-right: 		solid 2px white;
+	cursor: 			pointer;
+}
+
+/** END Forum **/
+
+/** Topic **/
+
+.message {
+    border:     solid 1px white;
+    height:     100%;
+    margin:     auto;
+    text-align: center;
+}
+
+.message img {
+    width: 100%;
+    margin: auto;
+}
+
+.message-body {
+    text-align: center;
+}
+
+.message-user {
+   text-align: center; 
+}
+
+.message-user p {
+    text-align: left; 
+}
+
+.message-username {
+    padding-top: 2%;
+}
+
+.message-role {
+    border-left: 1px solid white;
+    padding-left: 2%;
+    vertical-align: middle;
+}
+
+.message-content {
+    padding:    1%;
+    text-align: justify;
+    text-indent: 5%;
+
+    height:     auto;
+
+    min-height: 90%;
+}
+
+.message-content p {
+    min-height: 200px;
+
+    height:     auto !important;
+
+    height:     200px;
+}
+
+.message-signature {
+    border-top: solid 1px white;
+    font-style: italic;
+    text-align: center;
+    padding:    1%;
+
+    height:     auto;
+    min-height: 90%;
+}
+
+.message-signature p {
+    min-height: 50px;
+
+    height:     auto !important;
+
+    height:     50px;
+}
+
+#new-message {
+    font-weight:    bold;
+    text-align:     center;
+    
+    border:         1px solid white;
+    padding:        0;
+    height:         100%;
+}   
+
+#new-message .no-form {
+    color:      darkred;
+    padding:    2%;
+}
+
+#new-message #no-new-message {
+    border-bottom: 5px solid darkred;
+}
+
+#new-message-form {
+    padding:    2%;
+}
+
+/** END Topic **/

@@ -17,9 +17,6 @@ class UserFunctions
     }
 
     public function changeAvatar($file,$user) {
-        /*$results = "";
-        $line = $results->fetch();
-        $tmp_name = $_FILES['newAvatar']['tmp_name'];*/
         $filename = $user->getUsername().'.png';
         $upload = move_uploaded_file($file, "./img/users/$filename");
         if(!$upload) {
@@ -31,6 +28,22 @@ class UserFunctions
             <p class="success">Profile picture updated !</p>
             <p>Refresh your profile page to see changes</p>
             <?php
+        }
+    }
+
+    public function roleStr(string $role) {
+        switch ($role) {
+            case 'ROLE_USER':
+                return 'member';
+                break;
+            
+            case 'ROLE_MODO':
+                return 'moderator';
+                break;
+
+            case 'ROLE_ADMIN':
+                return 'administrator';
+                break;
         }
     }
 
