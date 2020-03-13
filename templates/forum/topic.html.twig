@@ -22,28 +22,44 @@
 </div>
 
 {% for message in messages %}
-    <div class="col-xl-12 message">
-        <div class="row">
-            <div class="col-md-3 message-user" style="border: solid 1px white">
-                <img src="{{ asset('img/users/'~message.username~'.png')}}" alt="{{ message.username }}'s profile picture">
-                <p class="message-username">
-                    {{ message.username }} 
-                    <span class="message-role {{ message.roles }}-role">
-                        <b>{{ message.roles | title }}</b>
-                    </span>
-                </p>
-                <p>{{ message.publicationDate | date('d/m/Y H:i:s') }}</p>
-            </div>
-            <div class="col-md-9 message-body" style="border: solid 1px white; width: 100%;">
-                <div class="message-content">
-                    <p>{{ message.content }}</p>
+    {% if message.visible == 1 %}
+        <div class="col-xl-12 message">
+            {% if app.user and message.idUser == app.user.id %}
+                <a href="{{ path('editMessage',{id: message.id}) }}">
+                    <p class="edit-message"><i>✍</i><br/>Edit</p>
+                </a>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-3 message-user" style="border: solid 1px white">
+                    <img src="{{ asset('img/users/'~message.username~'.png')}}" alt="{{ message.username }}'s profile picture">
+                    <p class="message-username">
+                        {{ message.username }} 
+                        <span class="message-role {{ message.roles }}-role">
+                            <b>{{ message.roles | title }}</b>
+                        </span>
+                    </p>
+                    <p>
+                        <span>{{ message.publicationDate | date('d/m/Y H:i:s') }}</span>
+                        {% if message.edited == 1 %}
+                            <i>[ edited ]</i>
+                        {% endif %}
+                    </p>
                 </div>
-                <div class="message-signature">
-                    <p>{{ message.signature }}</p>
+                <div class="col-md-9 message-body" style="border: solid 1px white; width: 100%;">
+                    <div class="message-content">
+                        <p>{{ message.content }}</p>
+                    </div>
+                    <div class="message-signature">
+                        <p>{{ message.signature }}</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div class="col-xl-12 message message-deleted">
+            <p>Message deleted by moderators</p>
+        </div>
+    {% endif %}
     
 {% endfor %}
 <div class="col-xl-12 message" id="new-message">
@@ -51,22 +67,32 @@
         <div class="bg-danger" id="no-new-message">
             <p class="no-form">You must be logged to write message</p>
         </div>
-    {% elseif app.user.isMuted == 1 %}
-        <div class="bg-danger" id="no-new-message">
-            <p class="no-form">You can't publish message if you're muted</p>
-        </div>
-    {% elseif topic.complete == 1 %}
-        <div class="bg-danger" id="no-new-message">
-            <p class="no-form">This topic is completed</p>
-        </div>
     {% else %}
-        <div id="new-message-form">
-            {{ form_start(form) }}
-            <label for="new_message_content" class="required">NEW MESSAGE : {{ topic.name }}</label>
-            {{ form_errors(form) }}
-            {{ form_rest(form) }}
-            {{ form_end(form) }}
-        </div>
+        {% if topic.staffOnly == 1 and not "ROLE_MODO" in app.user.roles %}
+            <div class="bg-danger" id="no-new-message">
+                <p class="no-form">You must be part of the staff to post in this topic</p>
+            </div>
+        {% elseif topic.readOnly == 1 and not topic.author == app.user.id  %}
+            <div class="bg-danger" id="no-new-message">
+                <p class="no-form">Only the author of this topic can post here</p>
+            </div>
+        {% elseif app.user.isMuted == 1 %}
+            <div class="bg-danger" id="no-new-message">
+                <p class="no-form">You can't publish message if you're muted</p>
+            </div>
+        {% elseif topic.complete == 1 %}
+            <div class="bg-danger" id="no-new-message">
+                <p class="no-form">This topic is completed</p>
+            </div>
+        {% else %}
+            <div id="new-message-form">
+                {{ form_start(form) }}
+                <label for="new_message_content" class="required">NEW MESSAGE : {{ topic.name }}</label>
+                {{ form_errors(form) }}
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
     {% endif %}
 </div>
 

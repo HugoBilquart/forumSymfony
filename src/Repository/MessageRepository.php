@@ -48,6 +48,12 @@ class MessageRepository extends ServiceEntityRepository
     }
     */
 
+    public function getTopicData($topic) {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT t.id, t.name FROM App\Entity\Message m JOIN App\Entity\Topic t WITH m.idTopic = t.id WHERE m.id = '.$topic);
+        return $query->execute();
+    }
+
     public function getCountMessage($topic) {
         return $this->createQueryBuilder('m')
             ->select('count(m.id)')
@@ -72,7 +78,7 @@ class MessageRepository extends ServiceEntityRepository
 
     public function getMessages($id) {
         $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT m.id,m.idUser,m.publicationDate,m.content,m.visible,u.username,u.roles,u.signature FROM App\Entity\Message m JOIN App\Entity\User u WITH m.idUser = u.id');
+        $query = $em->createQuery('SELECT m.id,m.idUser,m.publicationDate,m.content,m.visible,m.edited,u.username,u.roles,u.signature FROM App\Entity\Message m JOIN App\Entity\User u WITH m.idUser = u.id');
         return $query->getResult();
     }
 }

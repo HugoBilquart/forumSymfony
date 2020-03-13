@@ -76,4 +76,29 @@ class ForumController extends AbstractController
             'form'  =>  $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/forum/editMessage/{id}", name="editMessage")
+     */
+    public function editMessage(Message $message, MessageRepository $messageRepository , Request $request, EntityManagerInterface $manager)
+    {
+        $form = $this->createForm(NewMessageType::class,$message);
+        $form->handleRequest($request);
+        $topic = $messageRepository->getTopicData($message->getIdTopic());
+
+        if($form->isSubmitted() && $form->isValid()){
+            $message->setContent($form->get('content')->getData());
+            $message->setEdited(TRUE);
+            $manager->persist($message);
+            $manager->flush();
+
+            return $this->redirectToRoute('topic', ['id' => $message->getIdTopic()]);
+        }
+
+        return $this->render('forum/editMessage.html.twig', [
+            'topic' => $topic,
+            'message' => $message,
+            'form'  =>  $form->createView()
+        ]);
+    }
 }

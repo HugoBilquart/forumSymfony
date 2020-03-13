@@ -109,6 +109,11 @@ table.table-list {
     height:     50px;
 }
 
+.message-deleted {
+    padding: 2%;
+    background-color: rgb(110, 108, 119);
+}
+
 #new-message {
     font-weight:    bold;
     text-align:     center;
@@ -129,6 +134,36 @@ table.table-list {
 
 #new-message-form {
     padding:    2%;
+}
+
+.edit-message {
+    font-size:          1vw;
+    background-color:   #3B3A3F;
+    color:              cyan;
+    text-shadow:        1px 3px 2px blue;
+    border:             white 0.5px solid;
+
+    width: 5%;
+
+    display:            none;
+    padding:            0.5%;
+    position:           absolute;
+    top:                0;
+    right:              0;
+    z-index:            10;
+    vertical-align:     text-top top;
+}
+
+.edit-message i {
+    font-size:          2vw;
+}
+
+.message:hover {
+    background-color: 	rgb(100, 100, 100); 
+}
+
+.message:hover .edit-message {
+    display: inline;
 }
 
 /** END Topic **/

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IT Solutions - Edit profile details{% endblock %}
+
+{% block body %}
+
+{% dump(topic|last) %}
+
+{% set topic = topic|last %}
+<!-- Breadcrumb -->
+<div class="col-sm-12" id="breadcrumb">
+	<a href="{{ path('home') }}"><span>Home</span></a>
+	>
+    <a href="{{ path('forum') }}"><span>Forum</span></a>
+    >
+    <a href="{{ path('topic', {id: topic.id}) }}"><span>{{ topic.name }} [#{{ topic.id }}]</span></a>
+    >
+    <span>Edit message</span>
+    >
+    <span>#{{ message.id }}</span>
+</div>
+<!-- END Breadcrumb -->
+
+<div class="col-md-12">
+	<h1 class="page-name">Edit message</h1>
+</div>
+
+<br/>
+
+<div class="col-md-12" id="pdetails-form">
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

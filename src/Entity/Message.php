@@ -41,6 +41,11 @@ class Message
      */
     private $visible;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $edited;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,18 @@ class Message
     public function setVisible(bool $visible): self
     {
         $this->visible = $visible;
+
+        return $this;
+    }
+
+    public function getEdited(): ?bool
+    {
+        return $this->edited;
+    }
+
+    public function setEdited(?bool $edited): self
+    {
+        $this->edited = $edited;
 
         return $this;
     }
