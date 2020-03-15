@@ -22,6 +22,7 @@ use App\Form\EditProfileDetailsType;
 
 use App\Service\UserFunctions;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\VarDumper\VarDumper;
 
 class UserController extends AbstractController
 {

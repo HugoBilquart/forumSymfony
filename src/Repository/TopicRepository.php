@@ -63,7 +63,7 @@ class TopicRepository extends ServiceEntityRepository
 
 
         $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT t.id,t.name,t.author,u.id,u.username,u.roles FROM App\Entity\Topic t JOIN App\Entity\User u WITH t.author = u.id');
+        $query = $em->createQuery('SELECT t.id,t.name,t.author,t.complete,u.username,u.roles FROM App\Entity\Topic t JOIN App\Entity\User u WITH t.author = u.id');
         return $query->getResult();
     }
 }

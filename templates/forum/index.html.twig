@@ -16,28 +16,35 @@
 
 <div class="col-xl-12">
     <h1 class="page-name">Forum</h1>
-</div>
-
-<div class="col-xl-12">
     <span>Every topics</span>
 </div>
 
-<div class="col-xl-12 table-responsive-xl text-nowrap">
+{% if app.user and app.user.isMuted == 0 %}
+    <div class="col-xl-12" id="create-topic">
+        <a href="{{ path("newTopic") }}"><p><b>➕</b> Create new topic</p></a>
+    </div>
+{% endif %}
+
+<div class="col-xl-12 table-responsive text-nowrap">
     <table class="table table-list" id="topics">
         <thead>
             <tr>
                 <th scope="col"><a href="" class="filterLink">Topic name</a></th>
                 <th scope="col"><a href="" title="Order by name" class="filterLink">Author</a></th>
                 <th scope="col"><a href="" title="Order by role" class="filterLink">Number of messages</a></th>
-                <th scope="col">Last message</th>
+                <th scope="col"><a class="filterLink">Last message</a></th>
             </tr>
         </head>
         <tbody>
             {% for topic in topics %}
                 <tr data-id="{{ topic.id }}" tabindex="0">
                     <th scope="row">
+                        
                         <!--img src="{{ asset('img/icons/folder.png') }}" alt="📁" class="topic-folder"-->
                         📁 {{ topic.name }} [#{{topic.id}}]
+                        {% if topic.complete == 1 %}
+                            <i>[ Completed ]</i>
+                        {% endif %}
                     </th>
                     <td>
                         <p>

@@ -1,11 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}IT Solutions - Memberlist{% endblock %}
+{% block title %}IT Solutions - Topic - {{ topic.name }} {% endblock %}
 
 {% block body %}
-
-{% dump(topic) %}
-{% dump(messages) %}
 
 <!-- Breadcrumb -->
 <div class="col-sm-12" id="breadcrumb">
@@ -72,7 +69,7 @@
             <div class="bg-danger" id="no-new-message">
                 <p class="no-form">You must be part of the staff to post in this topic</p>
             </div>
-        {% elseif topic.readOnly == 1 and not topic.author == app.user.id  %}
+        {% elseif topic.readOnly == 1 and topic.author != app.user.id  %}
             <div class="bg-danger" id="no-new-message">
                 <p class="no-form">Only the author of this topic can post here</p>
             </div>

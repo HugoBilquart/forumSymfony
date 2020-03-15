@@ -14,12 +14,23 @@ table.table-list {
 	border-left: 	solid 2px transparent;
 	border-right: 	solid 2px transparent;
 
-	vertical-align: middle;
+    vertical-align: middle;
+    
+    overflow-x:auto;
 }
 
 #topics tbody {
     color: white;
     vertical-align: middle;
+}
+
+#topics tbody th {
+    text-align: left;
+}
+
+#topics tbody th i {
+    color: grey;
+    font-size: smaller;
 }
 
 #topics .topic-folder {
@@ -34,6 +45,21 @@ table.table-list {
 	border-right: 		solid 2px white;
 	cursor: 			pointer;
 }
+
+#create-topic b {
+    text-shadow:    -0.5px -1px 10px cyan;
+}
+
+#create-topic a {
+    color: darkcyan;
+    font-weight: bold;
+}
+
+#create-topic a:hover, #create-topic a:focus {
+    color: cyan;
+    text-decoration: none;
+}
+
 
 /** END Forum **/
 

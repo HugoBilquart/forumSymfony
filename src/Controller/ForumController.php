@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\VarDumper\VarDumper;
+
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Topic;
@@ -16,6 +18,7 @@ use App\Repository\TopicRepository;
 use App\Entity\Message;
 use App\Repository\MessageRepository;
 
+use App\Form\NewTopicType;
 use App\Form\NewMessageType;
 
 use App\Service\UserFunctions;
@@ -27,7 +30,6 @@ class ForumController extends AbstractController
      */
     public function index(TopicRepository $topicRepository, MessageRepository $messageRepository)
     {
-        //$topics = $topicRepository->findAll();
         $topics = $topicRepository->getTopicsData();
         foreach ($topics as $key => $value) {
             $countMessage = $messageRepository->getCountMessage($topics[$key]['id']);
@@ -39,6 +41,45 @@ class ForumController extends AbstractController
 
         return $this->render('forum/index.html.twig', [
             'topics' => $topics,
+        ]);
+    }
+
+    /**
+     * @Route("/forum/newTopic", name="newTopic")
+     */
+    public function newTopic(Request $request, EntityManagerInterface $manager)
+    {
+        $form = $this->createForm(NewTopicType::class, ['role' => $this->getUser()->getRoles()]);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $topic = new Topic();
+            $topic->setName($form->get('name')->getData());
+            $topic->setAuthor($this->getUser()->getId());
+            $topic->setCreationDate(date_create(date('Y-m-d')));
+            $topic->setReadOnly($form->get('readOnly')->getData());
+            $topic->setStaffOnly($form->get('staffOnly')->getData());
+            $topic->setComplete(0);
+            $topic->setVisible(1);
+
+            $manager->persist($topic);
+            $manager->flush();
+
+            $message = new Message();
+            $message->setIdTopic($topic->getId());
+            $message->setIdUser($this->getUser()->getId());
+            $message->setPublicationDate(date_create(date('Y-m-d H:i:s')));
+            $message->setContent($form->get('content')->getData());
+            $message->setVisible(1);
+
+            $manager->persist($message);
+            $manager->flush();
+
+            return $this->redirectToRoute('topic', ['id' => $topic->getId()]);
+        }
+
+        return $this->render('forum/newTopic.html.twig', [
+            'form'  =>  $form->createView()
         ]);
     }
 
