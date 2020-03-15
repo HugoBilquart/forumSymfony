@@ -4,7 +4,54 @@
 
 {% block body %}
 
-<h1>Welcome on IT Solutions ! ✅</h1>
-<hr>
+<div class="col-sm-12">
+	<h1 class="page-name">Welcome on IT Solutions ! ✅</h1>
+	<hr>
+	<h2>Here are some information about the forum</h2>
+</div>
+
+<div class="col-sm-6" id="birthdays">
+	<table class="table table-dark table-bordered homepage-table">
+		<thead>
+			<tr>
+				<th scope="row">
+					Birthday 🎂
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<p>Today is birthday of
+                    {% if birthdays|length == 0 %}
+                        <i class="no-birthday">nobody</i>
+                    {% elseif birthdays|length == 1 %}
+                        {{ birthdays.username }}
+                    {% else %}
+                        {% for user in birthdays %}
+                            {% if loop.index == birthdays|length %}
+                                {{ user.username }}
+                            {% else %}
+                                {{ user.username }},
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+					{% if birthdays|length > 0 %}
+						<ul>
+							{% for user in birthdays %}
+								<li>
+									<img src="{{ asset('img/users/'~user.username~'.png')}}" alt="{{ user.username }}'s profile picture" class="birthday-pp">
+									<span>
+										<a href="{{ path('profile', {id: user.id}) }}" title="Access to {{ user.username }}'s profile page" class="{{ user.roleStr(user.roles|last) }}-role">{{ user.username }}</a> is now {{ user.age(user.birthDate) }}
+									</span>
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
 {% endblock %}

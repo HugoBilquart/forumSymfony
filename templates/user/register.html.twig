@@ -3,11 +3,24 @@
 {% block title %}IT Solutions - Registration{% endblock %}
 
 {% block body %}
-<div class="col-md-12">
-	<h1>Registration page</h1>
+<!-- Breadcrumb -->
+<div class="col-sm-12" id="breadcrumb">
+    <a href="{{ path('home') }}"><span>Home</span></a>
+    >
+    <span>Registration</span>
 </div>
+<!-- END Breadcrumb -->
+
+<!-- Page title -->
+<div class="col-md-12">
+	<h1 class="page-name">Registration page</h1>
+</div>
+<!-- END Page title -->
+
 <br/>
 <div class="col-md-8" id="registration-form">
+	<h2>Registration form</h2>
+	<hr>
 	{{ form_start(form) }}
 	{{ form_rest(form) }}
 	<p class="failed">WARNING ! Your password is crypted and can't be recovered if you forget it</p>

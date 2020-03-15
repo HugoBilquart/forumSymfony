@@ -29,12 +29,14 @@ class RegisterType extends AbstractType
                 TextType::class, [
                 'required' => true,
                 'label' => 'Username',
+                'empty_data' => 'Username',
                 'attr' => ['class' => 'form-control']
             ])
 
             ->add('email', 
                 EmailType::class, [
                 'required' => true,
+                'empty_data' => 'example@domain.com',
                 'label' => 'Email address',
                 'attr' => ['class' => 'form-control']
             ])
@@ -43,7 +45,8 @@ class RegisterType extends AbstractType
                 RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
-                'options' => ['attr' => ['class' => 'form-control']],
+                'options' => ['attr' => ['class' => 'form-control','pattern' => '{8,}']],
+                'empty_data' => '********',
                 'first_options'  => ['label' => 'Define your password'],
                 'second_options' => ['label' => 'Confirm your password']
             ])

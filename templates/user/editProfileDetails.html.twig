@@ -1,11 +1,29 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}IT Solutions - Edit profile details{% endblock %}
+
 {% block body %}
-    
-    {{ form_start(form) }}
-	{{ form_errors(form) }}
-	{{ form_rest(form) }}
-	<button type="submit" class="btn btn-primary">Save</button>
-	{{ form_end(form) }}
+<!-- Breadcrumb -->
+<div class="col-sm-12" id="breadcrumb">
+	<a href="{{ path('home') }}"><span>Home</span></a>
+	>
+	<a href="{{ path('users') }}"><span>Users</span></a>
+	>
+	<a href="{{ path('profile', {id: app.user.id}) }}"><span>You</span></a>
+	>
+	<span class="current-page">Edit profile details</span>
+</div>
+<!-- END Breadcrumb -->
+
+<div class="col-md-12">
+	<h1 class="page-name">Edit your profile details</h1>
+</div>
+<br/>
+<div class="col-md-12" id="pdetails-form">
+{{ form_start(form) }}
+{{ form_errors(form) }}
+{{ form_rest(form) }}
+{{ form_end(form) }}
+</div>
     
 {% endblock %}

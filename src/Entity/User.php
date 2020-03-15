@@ -319,4 +319,8 @@ class User implements UserInterface
 			return $newfile;
 		}
     }
+
+    public function age($birthday) {
+        return date_diff($birthday,date_create(date('Y-m-d')))->format('%y');
+    }
 }

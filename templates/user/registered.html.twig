@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IT Solutions - Registered successfully{% endblock %}
+
+{% block body %}
+
+<h1>Registered successfully ! ✅</h1>
+
+<p>Your account {{ user.username }} has been created.</p>
+<p>An email as been sent to {{ user.email }} !
+
+<hr>
+
+<p>To login, go to : <a href="{{ path('app_login') }}">Login page</a><p>
+
+{% endblock %}
