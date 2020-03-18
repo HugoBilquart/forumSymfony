@@ -6,7 +6,7 @@ class UserFunctions
 {
 
     public function createAvatarFile($username) {
-        $file = 'img/users/default.png';
+        $file = 'img/users/saves/default.png';
         $newfile = 'img/users/'.$username.'.png';
         if (!copy($file, $newfile)) {
             echo "<p class='failed'>Failed to create new user avatar\n</p>";

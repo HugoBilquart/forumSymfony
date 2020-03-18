@@ -41,7 +41,11 @@
                     <th scope="row">
                         
                         <!--img src="{{ asset('img/icons/folder.png') }}" alt="📁" class="topic-folder"-->
-                        📁 {{ topic.name }} [#{{topic.id}}]
+                        {% if topic.name | length  > 50 %}
+                            📁 {{ topic.name | slice(0, 50) }}... [#{{topic.id}}]
+                        {% else %}
+                            📁 {{ topic.name }} [#{{topic.id}}]
+                        {% endif %}
                         {% if topic.complete == 1 %}
                             <i>[ Completed ]</i>
                         {% endif %}

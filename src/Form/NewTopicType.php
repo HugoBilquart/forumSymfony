@@ -68,7 +68,7 @@ class NewTopicType extends AbstractType
                 ])
             ;
         }
-        else if(in_array('ROLE_MODO', $options['role'])) {
+        else if(in_array('ROLE_MODO', $options['data']['role'])) {
             $builder
                 ->add('name', 
                     TextType::class, [
