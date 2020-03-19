@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IT Solutions - Forum{% endblock %}
+
+{% block body %}
+
+<!-- Breadcrumb -->
+<div class="col-sm-12" id="breadcrumb">
+    <a href="{{ path('home') }}"><span>Home</span></a>
+    >
+    <span>Forum</span>
+</div>
+<!-- END Breadcrumb -->
+
+<div class="col-xl-12">
+    <h1 class="page-name">Forum</h1>
+    <span>Every topics</span>
+</div>
+
+{% if app.user and app.user.isMuted == 0 %}
+    <div class="col-xl-12" id="create-topic">
+        <a href="{{ path("newTopic") }}"><p><b>➕</b> Create new topic</p></a>
+    </div>
+{% endif %}
+
+<div class="col-xl-12 table-responsive text-nowrap">
+    <table class="table table-list" id="topics">
+        <thead>
+            <tr>
+                <th scope="col"><a href="" class="filterLink">Topic name</a></th>
+                <th scope="col"><a href="" title="Order by name" class="filterLink">Author</a></th>
+                <th scope="col"><a href="" title="Order by role" class="filterLink">Number of messages</a></th>
+                <th scope="col"><a class="filterLink">Last message</a></th>
+            </tr>
+        </head>
+        <tbody>
+            {% for topic in topics %}
+                <tr data-id="{{ topic.id }}" tabindex="0">
+                    <th scope="row">
+                        <!--img src="{{ asset('img/icons/folder.png') }}" alt="📁" class="topic-folder"-->
+                        {% if topic.name | length  > 50 %}
+                            <a title="{{ topic.name }}">📁 {{ topic.name | slice(0, 50) }}... [#{{topic.id}}]</a>
+                        {% else %}
+                            📁 {{ topic.name }} [#{{topic.id}}]
+                        {% endif %}
+                        {% if topic.complete == 1 %}
+                            <i>[ Completed ]</i>
+                        {% endif %}
+                    </th>
+                    <td>
+                        <p>
+                            {{ topic.username }}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{ topic.countMessage }}
+                        </p>
+                    </td>
+                    <td>
+                        {{ topic.lastMessage|date('d/m/Y H:i:s') }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="col-xl-12 text-center" id="pagination">
+    <ul>
+        <li>
+            <a {% if page != 1 %} href="{{ path('forum_page', {page: page - 1}) }}" class="btn btn-primary" {% else %} class="btn btn-primary disabled"{% endif %}>
+                ◄
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('forum') }}" class="btn btn-primary {% if page == 1 %} inactive disabled {% endif %}">
+                1
+            </a>
+        </li>
+        {% if page >= countPage - 5 %}
+            {% for i in range(countPage - 5,countPage) %}
+                {% if i != countPage %}
+                    <li>
+                        <a href="{{ path('forum_page', {page: i}) }}" class="btn {% if i == page %} btn-primary inactive disabled {% else %} btn-secondary {% endif %}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% for i in range(page, page + 5) %}
+                {% if i != 1 and i < countPage %}
+                    <li>
+                        <a href="{{ path('forum_page', {page: i}) }}" class="btn {% if i == page %} btn-primary inactive disabled {% else %} btn-secondary {% endif %}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <li>
+            <a href="{{ path('forum_page',{page: countPage}) }}" class="btn btn-primary {% if countPage == page %} inactive disabled {% endif %}">
+                {{ countPage }}
+            </a>
+        </li>
+        <li>
+            <a {% if page != countPage %} href="{{ path('forum_page', {page: page + 1}) }}" class="btn btn-primary" {% else %} class="btn btn-primary disabled"{% endif %}>
+                ►
+            </a>
+        </li>
+    </ul>
+</div>
+
+<script>
+    $('#topics > tbody > tr').click(function() {
+        window.location.href = "forum/topic/" + $(this).data("id");
+	});
+
+    $('#topics > tbody > tr').on('keypress',function(e) {
+        if(e.which == 13)
+            window.location.href = "forum/topic/" + $(this).data("id");
+	});
+</script>
+{% endblock %}

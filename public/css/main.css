@@ -32,8 +32,10 @@ h1,h2,h3,span,li,p {
 }
 
 #content {
+    background-color: 		    #3B3A3F;
+	padding: 				    2%;
     min-height:                 100%;
-    position: relative;
+    position:                   relative;
 }
 
 #footer {
@@ -107,11 +109,6 @@ h1,h2,h3,span,li,p {
     display: outline-block;
     height: 33%;
     margin: 2%;
-}
-
-#content {
-    background-color: 		#3B3A3F;
-	padding: 				2%;
 }
 
 #logo {

@@ -54,7 +54,7 @@ class User implements UserInterface
     private $biography;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, length=100)
      */
     private $signature;
 
