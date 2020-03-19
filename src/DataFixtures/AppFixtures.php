@@ -122,6 +122,7 @@ class AppFixtures extends Fixture
             $user->setPassword($this->passwordEncoder->encodePassword($user,'fakeuser4'));
             $user->setRegistrationDate($currentDate);
             $user->setIsMuted(rand(0,1));
+            $user->setBirthDate(date_create($faker->date($format = 'Y-m-d', $max = 'now')));
             $manager->persist($user);
 
             if($i == USER_COUNT) {
