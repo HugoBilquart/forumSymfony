@@ -14,6 +14,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+use Symfony\Component\Console\Helper\ProgressBar;
+
 use Faker;
 
 class AppFixtures extends Fixture
@@ -48,9 +50,23 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        echo "This fixture will fill the forum by creating a specified number of random user (In addition to a defined user, a moderator and an administrator). Then it will create a specified number of topics and messages wrote by those random users.\n";
         echo "\033[97mLet's fill the forum :\033[0m\n";
-        define("TOPIC_COUNT", 200);
-        define("USER_COUNT", 20);
+        $userCount = readline("How many user do you want to create (Only integer) ? ");
+
+        if(!is_numeric($userCount) || strpos( $userCount, "." ) !== false) {
+            echo "\033[33m > \033[31mError : User count must be int without decimal\033[0m\n";
+            exit();
+        }
+
+        $topicCount = readline("How many topic do you want to create (Only integer) ? ");
+        if(!is_numeric($topicCount) || strpos( $topicCount, "." ) !== false) {
+            echo "\033[33m > \033[31mError : Topic count be int without decimal\033[0m\n";
+            exit();
+        }
+
+        define("TOPIC_COUNT", $topicCount);
+        define("USER_COUNT", $userCount);
 
         //STEP 1 : Clear users avatar directory
         $files = glob('public/img/users/*.png');
@@ -109,10 +125,10 @@ class AppFixtures extends Fixture
             $manager->persist($user);
 
             if($i == USER_COUNT) {
-                echo "\033[33m > Create ".USER_COUNT." users : ".round($i/(USER_COUNT / 100))." %   \033[0m\n";
+                echo "\033[33m > Create ".USER_COUNT." users : ".round($i/(USER_COUNT / 100))." % \033[0m\n";
             }
             else {
-                echo "\033[33m > Create ".USER_COUNT." users : ".round($i/(USER_COUNT / 100))." %   \033[0m\r";
+                echo "\033[33m > Create ".USER_COUNT." users : ".round($i/(USER_COUNT / 100))." % \033[0m\r";
             }
         }
         $manager->flush();
@@ -125,7 +141,7 @@ class AppFixtures extends Fixture
         //$modos = $manager->getRepository(User::class)->findBy(['roles' => '%"ROLE_MODO"%']);
         //$admin = $manager->getRepository(User::class)->findBy(['roles' => '%"ROLE_ADMIN"%']);
 
-        for ($i = 0; $i < 200; $i++) { 
+        for ($i = 0; $i < $topicCount; $i++) { 
             //Create topic
             //TODO : If author is a moderator or an administrator, staffOnly and/or readOnly options can be enabled --> rand(0,1)
             $topic = new Topic();
