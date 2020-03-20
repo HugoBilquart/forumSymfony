@@ -31,9 +31,34 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository)
     {
-        $users = $userRepository->findAll();
+        $count = $userRepository->countUser();
+        if($count <= 10) {
+            $users = $userRepository->findAll();
+            $countPage = null;
+        }
+        else {
+            $users = $userRepository->getUsers(1);
+            $countPage = $userRepository->countPage();
+        }   
         return $this->render('user/index.html.twig', [
             'users' => $users,
+            'countPage' => $countPage,
+            'page' => 1
+        ]);
+    }
+
+    /**
+     * @Route("/users?page={page}", name="users_page")
+     */
+    public function indexPage(UserRepository $userRepository,$page)
+    {
+        $users = $userRepository->getUsers($page);
+        $countPage = $userRepository->countPage();
+
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+            'countPage' => $countPage,
+            'page' => $page
         ]);
     }
 

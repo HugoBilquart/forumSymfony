@@ -41,6 +41,20 @@ class AppFixtures extends Fixture
         }
     }
 
+    function generateUsername(ObjectManager $manager) {
+        $available = FALSE;
+        while($available == FALSE) {
+            $faker = Faker\Factory::create('en_US');
+            $username = $faker->firstName();
+            $found = $manager->getRepository(User::class)->findBy(['email' => $username.'@domain.com']);
+
+            if(count($found) == 0) {
+                $available = TRUE;
+            }
+        }
+        return $username;
+    }
+
     private $passwordEncoder;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
@@ -114,7 +128,7 @@ class AppFixtures extends Fixture
 
         for($i = 1; $i <= USER_COUNT; $i++) {
             $user = new User();
-            $username = $faker->firstName();
+            $username = $this->generateUsername($manager);
             $user->setUsername($username);
             $this->createAvatarFile($username,'user');
             $user->setRoles(['ROLE_USER']);
@@ -124,6 +138,7 @@ class AppFixtures extends Fixture
             $user->setIsMuted(rand(0,1));
             $user->setBirthDate(date_create($faker->date($format = 'Y-m-d', $max = 'now')));
             $manager->persist($user);
+            $manager->flush();
 
             if($i == USER_COUNT) {
                 echo "\033[33m > Create ".USER_COUNT." users : ".round($i/(USER_COUNT / 100))." % \033[0m\n";
@@ -132,7 +147,6 @@ class AppFixtures extends Fixture
                 echo "\033[33m > Create ".USER_COUNT." users : ".round($i/(USER_COUNT / 100))." % \033[0m\r";
             }
         }
-        $manager->flush();
         echo "\033[33m > \033[32m".(USER_COUNT + 1)." users, 1 moderator and 1 administrator created\033[0m\n";
 
         //STEP 3 : Create 50 topics with 5 - 30 messages
@@ -142,7 +156,7 @@ class AppFixtures extends Fixture
         //$modos = $manager->getRepository(User::class)->findBy(['roles' => '%"ROLE_MODO"%']);
         //$admin = $manager->getRepository(User::class)->findBy(['roles' => '%"ROLE_ADMIN"%']);
 
-        for ($i = 0; $i < $topicCount; $i++) { 
+        for ($i = 1; $i <= $topicCount; $i++) { 
             //Create topic
             //TODO : If author is a moderator or an administrator, staffOnly and/or readOnly options can be enabled --> rand(0,1)
             $topic = new Topic();
@@ -179,7 +193,7 @@ class AppFixtures extends Fixture
             $manager->flush();
 
             //Loading during topic creation progression
-            if($i == TOPIC_COUNT - 1) {
+            if($i == TOPIC_COUNT) {
                 echo "\033[33m > Create ".TOPIC_COUNT." topic : ".round($i/(TOPIC_COUNT / 100))." %   \033[0m\n";
             }
             else {

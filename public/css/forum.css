@@ -60,31 +60,6 @@ table.table-list {
     text-decoration: none;
 }
 
-#pagination {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding: 2%;
-
-    text-align: center;
-}
-
-#pagination ul {
-    list-style-type: none;
-    width: 100%;
-}
-
-#pagination li {
-    display: inline;
-    padding: 0.5%;
-    margin: 0.5%;
-}
-
-#pagination a {
-    font-weight: bold;
-    font-size: medium;
-}
-
 /** END Forum **/
 
 /** Topic **/
