@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\FormError;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -16,12 +17,14 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 
-use App\Form\RegisterType;
 use App\Form\AvatarType;
+use App\Form\RegisterType;
+use App\Form\ChangePasswordType;
 use App\Form\EditProfileDetailsType;
 
 use App\Service\UserFunctions;
 use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper;
 use Symfony\Component\VarDumper\VarDumper;
 
 class UserController extends AbstractController
@@ -118,11 +121,60 @@ class UserController extends AbstractController
                 $userFunctions->changeAvatar($form->get('file')->getData(),$user);
     
                 return $this->redirectToRoute('profile', array(
-                    'id' => $this->getUser(),
+                    'id' => $this->getUser()->getId(),
                 ));
             }
 
             return $this->render('user/changeAvatar.html.twig', [
+                'form'  =>  $form->createView()
+            ]);
+        }
+        else {
+            return $this->redirectToRoute('home');
+        }
+    }
+
+    /**
+     * @Route("/editAccount/password/{id}", name="editPassword")
+     */
+    public function password(User $user, Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder, UserFunctions $userFunctions)
+    {
+        if($this->getUser() && $this->getUser() == $user) {
+            $form = $this->createForm(ChangePasswordType::class);
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()){
+                $postPassword = $passwordEncoder->encodePassword($user,$form->get('currentPassword')->getData());
+
+                $oldPassword = $form->get('currentPassword')->getData();
+
+                // Si l'ancien mot de passe est bon
+                if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                    if(!preg_match('^\S*(?=\S{8,})(?=\S*[\d])\S*$^',$form->get('newPassword')->getData())) {
+                        $form->get('newPassword')->addError(new FormError("You're password isn't valid (At least 8 characters and at least 1 number)"));
+                        return $this->render('user/changePassword.html.twig', [
+                            'form'  => $form->createView()
+                        ]);
+                    }
+                    else {
+                        $newEncodedPassword = $passwordEncoder->encodePassword($user, $form->get('newPassword')->getData()); 
+                        $user->setPassword($newEncodedPassword);
+                        $manager->persist($user);
+                        $manager->flush();
+
+                        return $this->render('user/changePassword.html.twig');
+                    }
+                }
+                else {                    
+                    $form->get('currentPassword')->addError(new FormError("Entered password doesn't match to your current password"));
+
+                    return $this->render('user/changePassword.html.twig', [
+                        'form'  => $form->createView()
+                    ]);
+                }
+            }
+
+            return $this->render('user/changePassword.html.twig', [
                 'form'  =>  $form->createView()
             ]);
         }

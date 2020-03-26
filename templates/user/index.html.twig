@@ -33,32 +33,36 @@
             </tr>
         </head>
         <tbody>
-            {% for user in users %}
-                <tr data-id="{{ user.id }}" tabindex="0">
-                    <th scope="row">{{ user.id }}</th>
-                    <td>{{ user.username }}</td>
-                    <td>
-                        <p class="{{ user.roleStr(user.roles|last) }}-role">
-                            {{ user.roleStr(user.roles|last) }}
-                        </p>
-                    </td>
-                    <td>
-                        <img src="img/users/{{ user.username }}.png" alt="{{ user.username }}'s profile picture" class="memberlist-picture">
-                    </td>
-                    <td>
-                        {{ user.registrationDate | date('d/m/Y') }}
-                    </td>
-                    <td>
-                        {% if user == app.user %}
-                            <p class="online">Currently online</p>
-                        {% elseif user.lastLogin is null %}
-                            <p class="failed">Never</p>
-                        {% else %}
-                            {{ user.getLastLoginStr(user.lastLogin) }}
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
+            {% if users is empty %}
+                <th colspan="6"><p class="text-danger">No user found...</p></th>
+            {% else %}
+                {% for user in users %}
+                    <tr data-id="{{ user.id }}" tabindex="0">
+                        <th scope="row">{{ user.id }}</th>
+                        <td>{{ user.username }}</td>
+                        <td>
+                            <p class="{{ user.roleStr(user.roles|last) }}-role">
+                                {{ user.roleStr(user.roles|last) }}
+                            </p>
+                        </td>
+                        <td>
+                            <img src="img/users/{{ user.username }}.png" alt="{{ user.username }}'s profile picture" class="memberlist-picture">
+                        </td>
+                        <td>
+                            {{ user.registrationDate | date('d/m/Y') }}
+                        </td>
+                        <td>
+                            {% if user == app.user %}
+                                <p class="online">Currently online</p>
+                            {% elseif user.lastLogin is null %}
+                                <p class="failed">Never</p>
+                            {% else %}
+                                {{ user.getLastLoginStr(user.lastLogin) }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 </div>

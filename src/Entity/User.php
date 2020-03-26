@@ -242,7 +242,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function roleStr(string $role) {
+    public function roleStr($role) {
         switch ($role) {
             case 'ROLE_USER':
                 return 'member';
@@ -310,7 +310,7 @@ class User implements UserInterface
     }
 
     public function createAvatarFile($username) {
-        $file = 'img/users/default.png';
+        $file = 'img/users/saves/default.png';
 		$newfile = 'img/users/'.$username.'.png';
 		if (!copy($file, $newfile)) {
     		echo "<p class='failed'>Failed to create new user avatar\n</p>";

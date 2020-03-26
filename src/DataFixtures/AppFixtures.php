@@ -95,7 +95,7 @@ class AppFixtures extends Fixture
         $currentDate = date_create(date('Y/m/d'));
         $currentDatetime = date_create(date('Y-m-d H:i:s'));
 
-        //STEP 2 : Create 11 users, 1 moderator and 1 administrator
+        //STEP 2 : Create 1 user, 3 moderators, 1 administrator and defined number of user
         $user = new User();
         $user->setUsername('User');
         $this->createAvatarFile('User','user');
@@ -106,11 +106,32 @@ class AppFixtures extends Fixture
         $user->setIsMuted(0);
         $manager->persist($user);
 
+        
         $user = new User();
         $user->setUsername('Moderator');
         $this->createAvatarFile('Moderator','modo');
         $user->setRoles(['ROLE_USER','ROLE_MODO']);
         $user->setEmail('modo@domain.com');
+        $user->setPassword($this->passwordEncoder->encodePassword($user,'fakemodo4'));
+        $user->setRegistrationDate($currentDate);
+        $user->setIsMuted(0);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setUsername('Guardian');
+        $this->createAvatarFile('Guardian','modo');
+        $user->setRoles(['ROLE_USER','ROLE_MODO']);
+        $user->setEmail('guardian@domain.com');
+        $user->setPassword($this->passwordEncoder->encodePassword($user,'fakemodo4'));
+        $user->setRegistrationDate($currentDate);
+        $user->setIsMuted(0);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setUsername('Protection');
+        $this->createAvatarFile('Protection','modo');
+        $user->setRoles(['ROLE_USER','ROLE_MODO']);
+        $user->setEmail('protection@domain.com');
         $user->setPassword($this->passwordEncoder->encodePassword($user,'fakemodo4'));
         $user->setRegistrationDate($currentDate);
         $user->setIsMuted(0);
@@ -125,7 +146,7 @@ class AppFixtures extends Fixture
         $user->setRegistrationDate($currentDate);
         $user->setIsMuted(0);
         $manager->persist($user);
-
+        
         for($i = 1; $i <= USER_COUNT; $i++) {
             $user = new User();
             $username = $this->generateUsername($manager);
@@ -150,23 +171,45 @@ class AppFixtures extends Fixture
         echo "\033[33m > \033[32m".(USER_COUNT + 1)." users, 1 moderator and 1 administrator created\033[0m\n";
 
         //STEP 3 : Create 50 topics with 5 - 30 messages
-        $users = $manager->getRepository(User::class)->findAll();
 
-        //TODO : Get user by roles (users,moderators,administrator)
-        //$modos = $manager->getRepository(User::class)->findBy(['roles' => '%"ROLE_MODO"%']);
-        //$admin = $manager->getRepository(User::class)->findBy(['roles' => '%"ROLE_ADMIN"%']);
+        //Create group of users depending of their role
+        $admin = $manager->getRepository(User::class)->getByRole('"ROLE_USER", "ROLE_MODO", "ROLE_ADMIN"');
+        $staff = $manager->getRepository(User::class)->getByRole('"ROLE_USER", "ROLE_MODO"');
+        $users = $manager->getRepository(User::class)->getByRole('"ROLE_USER"');
 
         for ($i = 1; $i <= $topicCount; $i++) { 
             //Create topic
-            //TODO : If author is a moderator or an administrator, staffOnly and/or readOnly options can be enabled --> rand(0,1)
             $topic = new Topic();
             $topic->setName($faker->text($maxNbChars = rand(30,100)));
             $topic->setCreationDate($currentDate);
-            $topic->setReadOnly(0);
-            $topic->setStaffOnly(0);
             $topic->setComplete(rand(0,1));
             $topic->setVisible(1);
-            $topic->setAuthor(array_rand($users));
+
+            //Random user (Select id)
+            $author = $users[array_rand($users)]['id'];
+            $topic->setAuthor($author);
+
+            //If selected user is admin, readOnly and staffOnly options can be enabled
+            if(array_search($author, array_column($admin, 'id')) !== FALSE ) {
+                $readOnly = rand(0,1);
+                $topic->setReadOnly($readOnly);
+                if($readOnly == 1) {
+                    $topic->setStaffOnly(0);
+                }
+                else {
+                    $topic->setStaffOnly(rand(0,1));
+                }
+            }
+            //If selected user is staff (moderator), staffOnly option can be enabled
+            else if(array_search($author, array_column($staff, 'id')) !== FALSE) {
+                $topic->setReadOnly(0);
+                $topic->setStaffOnly(rand(0,1));
+            }
+            else {
+                $topic->setReadOnly(0);
+                $topic->setStaffOnly(0);
+            }
+
             $manager->persist($topic);
             $manager->flush();
 
@@ -178,18 +221,32 @@ class AppFixtures extends Fixture
             $message->setContent($faker->text($maxNbChars = rand(50,500)));
             $message->setVisible(1);
             $manager->persist($message);
+            $manager->flush();
 
             //Generate 5-30 random messages in the topic
-            //TODO : staffOnly and/or readOnly options of the topic will influence who will write messages
             for($j = 0; $j < rand(5,30); $j++) {
                 $message = new Message();
                 $message->setIdTopic($topic->getId());
-                $message->setIdUser(array_rand($users));
+                //If read only option is enabled, only author can publish message in the topic
+                if($topic->getReadOnly() == 1) {
+                    $message->setIdUser($topic->getAuthor());
+                }
+                else {
+                    //If staff only option is enabled, only administrator and moderators can publish message in the topic
+                    if($topic->getStaffOnly() == 1) {
+                        $message->setIdUser($staff[array_rand($staff)]['id']);
+                    }
+                    //Else every user can publish message in the topic
+                    else {
+                        $message->setIdUser($users[array_rand($users)]['id']);
+                    }
+                }
                 $message->setPublicationDate($currentDatetime);
                 $message->setContent($faker->text($maxNbChars = rand(50,500)));
                 $message->setVisible(rand(0,1));
                 $manager->persist($message);
             }
+
             $manager->flush();
 
             //Loading during topic creation progression

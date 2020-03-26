@@ -8,7 +8,7 @@
 <div class="col-sm-12" id="breadcrumb">
     <a href="{{ path('home') }}"><span>Home</span></a>
     >
-    <span>Forum</span>
+    <span>Forum {% if countPage is not null %}[ Page {{page}} ]{% endif %}</span>
 </div>
 <!-- END Breadcrumb -->
 
@@ -25,27 +25,39 @@
 
 <div class="col-xl-12 table-responsive text-nowrap">
     <table class="table table-list" id="topics">
-        <thead>
+        <thead class="thead-dark">
             <tr>
-                <th scope="col"><a href="" class="filterLink">Topic name</a></th>
-                <th scope="col"><a href="" title="Order by name" class="filterLink">Author</a></th>
-                <th scope="col"><a href="" title="Order by role" class="filterLink">Number of messages</a></th>
-                <th scope="col"><a class="filterLink">Last message</a></th>
+                <th scope="col"><a href="#" class="filterLink">Topic name</a></th>
+                <th scope="col"><a href="#" title="Order by name" class="filterLink">Author</a></th>
+                <th scope="col"><a href="#" title="Order by role" class="filterLink">Number of messages</a></th>
+                <th scope="col"><span class="filterLink">Last message</span></th>
             </tr>
         </head>
         <tbody>
             {% for topic in topics %}
                 <tr data-id="{{ topic.id }}" tabindex="0">
                     <th scope="row">
+                            {% if topic.staffOnly == 1 %}
+                                <span class="topic-icons" title="Staff only topic"><b>👤</b></span>
+                            {% elseif topic.readOnly == 1 %}
+                                <span class="topic-icons" title="Read only topic"><b>📖</b></span>
+                            {% else %}
+                                <span class="topic-icons"><b>📁</b></span>
+                            {% endif %}
+
+                            {% if topic.complete == 1 %}
+                            <span class="topic-icons" title="This topic is closed">✓</<span>
+                            {% endif %}
                         <!--img src="{{ asset('img/icons/folder.png') }}" alt="📁" class="topic-folder"-->
                         {% if topic.name | length  > 50 %}
-                            <a title="{{ topic.name }}">📁 {{ topic.name | slice(0, 50) }}... [#{{topic.id}}]</a>
+                            <span class="topic-title" title="{{ topic.name }}">{{ topic.name | slice(0, 50) }}... [#{{topic.id}}]
                         {% else %}
-                            📁 {{ topic.name }} [#{{topic.id}}]
+                            <span class="topic-title">{{ topic.name }} [#{{topic.id}}]
                         {% endif %}
                         {% if topic.complete == 1 %}
                             <i>[ Completed ]</i>
                         {% endif %}
+                        </span>
                     </th>
                     <td>
                         <p>
@@ -73,7 +85,7 @@
         <ul>
             <!-- Previous page + first page -->
             <li>
-                <a {% if page != 1 %} href="{{ path('forum_page', {page: page - 1}) }}" class="btn btn-primary" {% else %} class="btn btn-primary disabled"{% endif %}>
+                <a {% if page != 1 %} href="{{ path('forum_page', {page: page - 1}) }}" class="btn btn-primary" {% else %} href="" class="btn btn-primary disabled"{% endif %}>
                     ◄
                 </a>
             </li>
