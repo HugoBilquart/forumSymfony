@@ -57,22 +57,27 @@ class ForumController extends AbstractController
      */
     public function indexpage(TopicRepository $topicRepository, MessageRepository $messageRepository,$page)
     {
-        $topics = $topicRepository->getTopicsData($page);
-        $countPage = $topicRepository->countPage();
+        if(is_numeric($page)) {
+            $topics = $topicRepository->getTopicsData($page);
+            $countPage = $topicRepository->countPage();
 
-        foreach ($topics as $key => $value) {
-            $countMessage = $messageRepository->getCountMessage($topics[$key]['id']);
-            $topics[$key]['countMessage'] = $countMessage;
+            foreach ($topics as $key => $value) {
+                $countMessage = $messageRepository->getCountMessage($topics[$key]['id']);
+                $topics[$key]['countMessage'] = $countMessage;
 
-            $lastMessage = $messageRepository->getLastMessage($topics[$key]['id']);
-            $topics[$key]['lastMessage'] = $lastMessage;
+                $lastMessage = $messageRepository->getLastMessage($topics[$key]['id']);
+                $topics[$key]['lastMessage'] = $lastMessage;
+            }
+
+            return $this->render('forum/index.html.twig', [
+                'topics' => $topics,
+                'countPage' => $countPage,
+                'page' => $page
+            ]);
         }
-
-        return $this->render('forum/index.html.twig', [
-            'topics' => $topics,
-            'countPage' => $countPage,
-            'page' => $page
-        ]);
+        else {
+            return $this->redirectToRoute('forum');
+        }
     }
 
     /**

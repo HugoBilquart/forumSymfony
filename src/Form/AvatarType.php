@@ -16,7 +16,7 @@ class AvatarType extends AbstractType
         $builder
             ->add('file', FileType::class, [
                 'required' => true,
-                'label' => 'Import your file | Max : 1.5 Mo',
+                'label' => 'Import your file | Max : 1.5 MB',
                 'attr' => [
                     'class' => 'form-control',
                     'accept' => ".png"

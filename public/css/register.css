@@ -55,6 +55,11 @@ form input {
     text-align: center;
 }
 
+#avatar-form label {
+    float: none;
+    padding-bottom: 2%;
+}
+
 #avatar-form input[type="file"] {
     text-align: center;
     color: white;
@@ -127,4 +132,10 @@ form input {
 #password-form p {
     text-align: left;
     font-style: italic;
+}
+
+#password-form small {
+    text-align: left;
+    padding-left: 2%;
+    font-style: normal;
 }
