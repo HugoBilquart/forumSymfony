@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block favicon %}
+    <link rel="icon" href="{{ asset('img/errors/error_favicon.png') }}" type="image/x-icon">
+{% endblock %}
+{% block title %}Hello ExceptionsController!{% endblock %}
+
+{% block body %}
+
+<div class="col-sm-12" id="error-title">
+	<h1 class="page-name"><b>❌</b> Error 404 - {{ reason }} not found</h1>
+</div>
+
+<!-- Breadcrumb -->
+<div class="col-sm-12" id="breadcrumb">
+    <a href="{{ path('home') }}"><span>Home</span></a>
+    >
+    {% if reason == 'user' %}
+        <a href="{{ path('users') }}"><span>Users</span></a>
+        >
+        <span class="text-danger">User not found</span>
+    {% elseif reason == 'topic' %}
+       <a href="{{ path('forum') }}"><span>Forum</span></a>
+        >
+        <span class="text-danger">Topic not found</span>
+    {% else %}
+        <span class="text-danger">Content not found</span>
+    {% endif %}
+</div>
+<!-- END Breadcrumb -->
+
+<div class="col-sm-12 text-center" id="error">
+    {% if reason == 'user' %}
+        <img src="{{ asset('img/users/saves/default.png') }}" class="error-img">
+        <p>User not found</p>
+        <a href="{{ path('forum') }}">Return to member list</a>
+    {% elseif reason == 'topic' %}
+        <img src="{{ asset('img/errors/topic_404.png') }}" class="error-img">
+        <p>Topic not found</p>
+        <a href="{{ path('forum') }}">Return to the forum</a>
+    {% else %}
+        <img src="{{ asset('img/errors/content_404.png') }}" class="error-img">
+        <p id="not-centent">Content your try to find can't be found</p>
+        <a href="{{ path('home') }}">Return to homepage</a>
+    {% endif %}
+</div>
+
+{% endblock %}

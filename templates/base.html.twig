@@ -2,18 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/user.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/register.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/forum.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/management.css') }}">
-        <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}IT Solutions{% endblock %}</title>   
+        {% block favicon %}
+            <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/x-icon">
+        {% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/user.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/register.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/forum.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/management.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/error.css') }}">
+
+            <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+        {% endblock %}
     </head>
     <body lang="en">
         <div class="container-fluid">

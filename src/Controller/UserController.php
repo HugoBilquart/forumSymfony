@@ -66,13 +66,20 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/{id}", name="profile")
+     * @Route("/user/{id}", name="profile", requirements={"id"="\d+"})
      */
-    public function profile(User $user)
+    public function profile(User $user = null)
     {
-        return $this->render('user/profile.html.twig', [
-            'data' => $user
-        ]);
+        if (empty($user)) {
+            return $this->render('exceptions/404.html.twig', [
+                'reason' => 'user'
+            ]);
+        }
+        else {
+            return $this->render('user/profile.html.twig', [
+                'data' => $user
+            ]);
+        }
     }
 
     /**
