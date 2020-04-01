@@ -33,6 +33,10 @@ class ForumController extends AbstractController
         $topics = $topicRepository->getTopicsData(1);
         $countPage = $topicRepository->countPage();
 
+        if($countPage <= 1) {
+            $countPage = null;
+        }
+
         foreach ($topics as $key => $value) {
             $countMessage = $messageRepository->getCountMessage($topics[$key]['id']);
             $topics[$key]['countMessage'] = $countMessage;

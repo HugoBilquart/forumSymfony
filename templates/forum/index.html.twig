@@ -66,51 +66,90 @@
     </table>
 </div>
 
-<div class="col-xl-12 text-center" id="pagination">
-    <ul>
-        <li>
-            <a {% if page != 1 %} href="{{ path('forum_page', {page: page - 1}) }}" class="btn btn-primary" {% else %} class="btn btn-primary disabled"{% endif %}>
-                ◄
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('forum') }}" class="btn btn-primary {% if page == 1 %} inactive disabled {% endif %}">
-                1
-            </a>
-        </li>
-        {% if page >= countPage - 5 %}
-            {% for i in range(countPage - 5,countPage) %}
-                {% if i != countPage %}
-                    <li>
-                        <a href="{{ path('forum_page', {page: i}) }}" class="btn {% if i == page %} btn-primary inactive disabled {% else %} btn-secondary {% endif %}">
-                            {{ i }}
-                        </a>
-                    </li>
+<!-- Divide memberlist in pages if more than 10 members -->
+<!-- Pagination -->
+{% if countPage is not null %}
+    <div class="col-xl-12 text-center" id="pagination">
+        <ul>
+            <!-- Previous page + first page -->
+            <li>
+                <a {% if page != 1 %} href="{{ path('forum_page', {page: page - 1}) }}" class="btn btn-primary" {% else %} class="btn btn-primary disabled"{% endif %}>
+                    ◄
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('forum') }}" class="btn btn-primary {% if page == 1 %} inactive disabled {% endif %}">
+                    1
+                </a>
+            </li>
+
+            <!-- Other pages -->
+            {% if countPage > 2 %}
+                <!-- If more than 7 pages, 7 links must be displayed (5 other pages + first and last page) -->
+                {% if countPage > 7 %}
+                    <!-- From the fourth page, current page link centered -->
+                    {% if page >= 4 and page not in range(countPage - 3, countPage) %}
+                        {% for i in range(page - 2,page + 2) %}
+                            {% if i != countPage %}
+                                <li>
+                                    <a href="{{ path('forum_page', {page: i}) }}" class="btn {% if i == page %} btn-light inactive disabled {% else %} btn-secondary {% endif %}">
+                                        {{ i }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    <!-- To the last pages, right shift of current page link -->
+                    {% elseif page > (countPage / 2) %}
+                        {% for i in range(countPage - 5, (page + (countPage - page))) %}
+                            {% if i != countPage %}
+                                <li>
+                                    <a href="{{ path('forum_page', {page: i}) }}" class="btn {% if i == page %} btn-light inactive disabled {% else %} btn-secondary {% endif %}">
+                                        {{ i }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    <!-- To the first pages, left shift of current page link -->
+                    {% else %}
+                        {% for i in range(2, (page + (6 - page))) %}
+                            {% if i != countPage %}
+                                <li>
+                                    <a href="{{ path('forum_page', {page: i}) }}" class="btn {% if i == page %} btn-light inactive disabled {% else %} btn-secondary {% endif %}">
+                                        {{ i }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    {% for i in 2..countPage - 1 %}
+                        {% if page != countPage %}
+                            <li>
+                                <a href="{{ path('forum_page', {page: i}) }}" class="btn {% if i == page %} btn-light inactive disabled {% else %} btn-secondary {% endif %}">
+                                    {{ i }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
-            {% endfor %}
-        {% else %}
-            {% for i in range(page, page + 5) %}
-                {% if i != 1 and i < countPage %}
-                    <li>
-                        <a href="{{ path('forum_page', {page: i}) }}" class="btn {% if i == page %} btn-primary inactive disabled {% else %} btn-secondary {% endif %}">
-                            {{ i }}
-                        </a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        <li>
-            <a href="{{ path('forum_page',{page: countPage}) }}" class="btn btn-primary {% if countPage == page %} inactive disabled {% endif %}">
-                {{ countPage }}
-            </a>
-        </li>
-        <li>
-            <a {% if page != countPage %} href="{{ path('forum_page', {page: page + 1}) }}" class="btn btn-primary" {% else %} class="btn btn-primary disabled"{% endif %}>
-                ►
-            </a>
-        </li>
-    </ul>
-</div>
+            {% endif %}
+            <!-- END Other pages -->
+
+            <!-- Last page + next page -->
+            <li>
+                <a href="{{ path('forum_page',{page: countPage}) }}" class="btn btn-primary {% if countPage == page %} inactive disabled {% endif %}">
+                    {{ countPage }}
+                </a>
+            </li>
+            <li>
+                <a {% if page != countPage %} href="{{ path('forum_page', {page: page + 1}) }}" class="btn btn-primary" {% else %} class="btn btn-primary disabled"{% endif %}>
+                    ►
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endif %}
+<!-- END Pagination -->
 
 <script>
     $('#topics > tbody > tr').click(function() {

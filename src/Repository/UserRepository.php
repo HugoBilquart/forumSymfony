@@ -65,15 +65,59 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
     */
 
+    /*public function usernameExists($username) {
+        $query = $this->createQueryBuilder('u')
+        ->select('count(u.id)')
+        ->where('u.username = :username')
+        ->setParameter('username', $username)
+        ->getQuery();
+
+        return ceil($query->getSingleScalarResult());
+    }*/
+
     public function birthdays($value)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.birth_date LIKE :val')
             ->setParameter('val', '%'.$value)
             ->orderBy('u.birth_date', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function getUsers($page) {
+        $start = 10 * ($page - 1);
+        return $this->createQueryBuilder('u')
+            ->setFirstResult( $start )
+            ->setMaxResults( 10 )
+            ->getQuery()
+            ->getResult()
+        ;
+
+
+        /*$em = $this->getEntityManager();
+        $query = $em->createQueryBuilder('u')
+                    ->setFirstResult( $start )
+                    ->setMaxResults( 10 )
+                    ->getQuery();
+
+        return $query->getResult();*/
+    }
+
+    public function countUser() {
+        $query = $this->createQueryBuilder('u')
+        ->select('count(u.id)')
+        ->getQuery();
+
+        return ceil($query->getSingleScalarResult());
+    }
+
+    public function countPage() {
+        $query = $this->createQueryBuilder('u')
+        ->select('count(u.id)')
+        ->getQuery();
+
+        return ceil(($query->getSingleScalarResult())/10);
     }
 }
