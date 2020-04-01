@@ -8,11 +8,11 @@
         {% if app.user is null %}
             <p>
                 You're not logged 
-                <a href="{{ path("app_login") }}" class="btn btn-primary" id="login-btn">Login</a>
+                <a href="{{ path("app_login") }}" class="btn btn-primary login-btn">Login</a>
             </p>
             <p>
                 No account ? 
-                <a href="{{ path("register") }}" class="btn btn-primary" id="login-btn">Join us</a>
+                <a href="{{ path("register") }}" class="btn btn-primary login-btn">Join us</a>
             </p>
         {% else %}
             <a href="{{ path('profile', {id: app.user.id}) }}" title="Access to your profile page" id="session-profile-access">

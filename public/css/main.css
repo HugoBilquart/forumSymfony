@@ -48,7 +48,8 @@ h1,h2,h3,span,li,p {
 }
 
 #footer a {
-    color:                      navy;
+    /*color:                      rgb(0, 0, 30);*/
+    color:                      #010015;
     font-weight:                bold;
     text-shadow:                none;
     text-decoration:            none;
@@ -109,6 +110,11 @@ h1,h2,h3,span,li,p {
     display: outline-block;
     height: 33%;
     margin: 2%;
+}
+
+.login-btn {
+    color: white;
+    background-color: teal;
 }
 
 #logo {
@@ -322,6 +328,10 @@ hr {
 #pagination a {
     font-weight: bold;
     font-size: medium;
+}
+
+#pagination a.btn-primary {
+    
 }
 
 /** END Lists **/

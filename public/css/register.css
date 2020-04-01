@@ -3,7 +3,6 @@ form div {
 }
 
 form label {
-    display: inline;
     float: left;
 }
 
@@ -98,3 +97,34 @@ form input {
 }
 
 /*********************************************/
+
+#password-form {
+    margin: auto;
+    text-align: center;
+}
+
+#password-form div:first {
+    margin-bottom: 5%;
+}
+
+#password-form ul {
+    list-style-type: none;
+    color: red;
+    text-align: left;
+
+    float: left;
+}
+
+#password-form li {
+    float: left;
+}
+
+#password-form li::before {
+    vertical-align: middle;
+    content: "❌ ";
+}
+
+#password-form p {
+    text-align: left;
+    font-style: italic;
+}

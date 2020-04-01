@@ -34,4 +34,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/management, roles: ROLE_MODO }
+
+        - { path: ^/editProfile, roles: ROLE_USER }
+        - { path: ^/editAccount, roles: ROLE_USER }
+        - { path: ^/forum/newTopic, roles: ROLE_USER }

@@ -25,8 +25,6 @@
 					<p>Today is birthday of
                     {% if birthdays|length == 0 %}
                         <i class="no-birthday">nobody</i>
-                    {% elseif birthdays|length == 1 %}
-                        {{ birthdays.username }}
                     {% else %}
                         {% for user in birthdays %}
                             {% if loop.index == birthdays|length %}

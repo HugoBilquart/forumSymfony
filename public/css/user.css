@@ -82,6 +82,10 @@ img.memberlist-picture {
 	padding: 5%;
 }
 
+#details .birthday b {
+	color: gold;
+}
+
 .profile-page span.role {
 	font-size: 		20px;
 	font-weight: 	bold;
@@ -105,7 +109,9 @@ img.memberlist-picture {
 }
 
 .empty-detail {
-	color: 			rgba(120,120,120,0.5);
+	/*color: 			rgba(120,120,120,0.5);*/
+	color: #a4a4a4;
+	text-shadow: 	0.5px 1px 5px black;
 }
 
 .biography, .signature {

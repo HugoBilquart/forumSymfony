@@ -1,0 +1,38 @@
+.staffManagement {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px 5px;
+}
+
+.staffManagement-user {
+    border: solid 1px white;
+
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    padding: 0.5%;
+    margin: 2%;
+
+    text-indent: 2%;
+}
+
+.staffManagement-user img {
+    width: 100px;
+    height: 100px;
+}
+
+.staffManagement-user .user-data {
+    white-space: nowrap;
+}
+
+.staffManagement-user .user-data ul {
+    list-style-type: none;
+    height: 100%;
+    float: left;
+}
+
+.staffManagement-user .user-data ul li span {
+    font-size: large;
+    margin-bottom: 5%;
+}

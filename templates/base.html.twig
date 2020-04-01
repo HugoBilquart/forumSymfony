@@ -9,10 +9,13 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/user.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/register.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/forum.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/management.css') }}">
         <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
+    <body lang="en">
         <div class="container-fluid">
             {{ include('top.html.twig') }}
             {{ include('menu.html.twig') }}

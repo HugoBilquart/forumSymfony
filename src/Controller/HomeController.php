@@ -18,7 +18,6 @@ class HomeController extends AbstractController
         $birthdays = $userRepo->birthdays(date('m-d'));
 
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
             'birthdays' => $birthdays
         ]);
     }

@@ -69,12 +69,16 @@
 						</span>
 					</li>
 					<li class="list-group-item detail">
-						<span class="personal_page">
+						<span class="birthday">
 							Birth date : 
                             {% if data.birthDate is null %}
                                 <i class="empty-detail">undefined</i>
                             {% else %}
-                                {{ data.birthDate|date('d/m/Y') }}
+                                {% if data.birthDate|date('d-m') == "now"|date('d-m') %}
+                                    <b>{{ data.birthDate|date('d/m/Y') }} 🎂</b>
+                                {% else %}
+                                    {{ data.birthDate|date('d/m/Y') }}
+                                {% endif %}
                             {% endif %}
 						</span>
 					</li>
@@ -141,10 +145,12 @@
     {% if app.user is not null and data == app.user %}
         <!-- Edit profile buttons -->
         <div class="col-sm-12" id="editProfileButtons">
+            <span>Edit profile</span>
             <hr>
             <br/>
             <a href="{{ path('editProfileDetails',{id: app.user.id}) }}" class="btn btn-primary">Edit profile details</a>
             <a href="{{ path('changeAvatar',{id: app.user.id}) }}" class="btn btn-primary">Change avatar</a>
+            <a href="{{ path('editPassword',{id: app.user.id}) }}" class="btn btn-danger">Change password</a>
         </div>
         <!-- END Edit profile buttons -->
     {% endif %}
