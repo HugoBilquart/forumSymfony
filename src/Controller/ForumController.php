@@ -57,22 +57,27 @@ class ForumController extends AbstractController
      */
     public function indexpage(TopicRepository $topicRepository, MessageRepository $messageRepository,$page)
     {
-        $topics = $topicRepository->getTopicsData($page);
-        $countPage = $topicRepository->countPage();
+        if(is_numeric($page)) {
+            $topics = $topicRepository->getTopicsData($page);
+            $countPage = $topicRepository->countPage();
 
-        foreach ($topics as $key => $value) {
-            $countMessage = $messageRepository->getCountMessage($topics[$key]['id']);
-            $topics[$key]['countMessage'] = $countMessage;
+            foreach ($topics as $key => $value) {
+                $countMessage = $messageRepository->getCountMessage($topics[$key]['id']);
+                $topics[$key]['countMessage'] = $countMessage;
 
-            $lastMessage = $messageRepository->getLastMessage($topics[$key]['id']);
-            $topics[$key]['lastMessage'] = $lastMessage;
+                $lastMessage = $messageRepository->getLastMessage($topics[$key]['id']);
+                $topics[$key]['lastMessage'] = $lastMessage;
+            }
+
+            return $this->render('forum/index.html.twig', [
+                'topics' => $topics,
+                'countPage' => $countPage,
+                'page' => $page
+            ]);
         }
-
-        return $this->render('forum/index.html.twig', [
-            'topics' => $topics,
-            'countPage' => $countPage,
-            'page' => $page
-        ]);
+        else {
+            return $this->redirectToRoute('forum');
+        }
     }
 
     /**
@@ -117,36 +122,43 @@ class ForumController extends AbstractController
     /**
      * @Route("/forum/topic/{id}", name="topic")
      */
-    public function topic(Topic $topic,Message $message,TopicRepository $topicRepository, MessageRepository $messageRepository, UserFunctions $functions, Request $request, EntityManagerInterface $manager)
+    public function topic(Topic $topic = null,TopicRepository $topicRepository, MessageRepository $messageRepository, UserFunctions $functions, Request $request, EntityManagerInterface $manager)
     {
-        $messages = $messageRepository->getMessages($topic->getId());
-        foreach ($messages as $key => $value) {
-            $messages[$key]['roles'] = $functions->roleStr(end($messages[$key]['roles']));
+        if (empty($topic)) {
+            return $this->render('exceptions/404.html.twig', [
+                'reason' => 'topic'
+            ]);
         }
+        else {
+            $messages = $messageRepository->getMessages($topic->getId());
+            foreach ($messages as $key => $value) {
+                $messages[$key]['roles'] = $functions->roleStr(end($messages[$key]['roles']));
+            }
 
-        $form = $this->createForm(NewMessageType::class);
-        $form->handleRequest($request);
+            $form = $this->createForm(NewMessageType::class);
+            $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
-            $message = new Message();
-            $message->setIdTopic($topic->getId());
-            $message->setIdUser($this->getUser()->getId());
-            $message->setPublicationDate(date_create(date('Y-m-d H:i:s')));
-            $message->setContent($form->get('content')->getData());
-            $message->setVisible(1);
+            if($form->isSubmitted() && $form->isValid()){
+                $message = new Message();
+                $message->setIdTopic($topic->getId());
+                $message->setIdUser($this->getUser()->getId());
+                $message->setPublicationDate(date_create(date('Y-m-d H:i:s')));
+                $message->setContent($form->get('content')->getData());
+                $message->setVisible(1);
 
-            $manager->persist($message);
-            $manager->flush();
+                $manager->persist($message);
+                $manager->flush();
 
-            return $this->redirectToRoute('topic', ['id' => $topic->getId()]);
+                return $this->redirectToRoute('topic', ['id' => $topic->getId()]);
+            }
+
+            
+            return $this->render('forum/topic.html.twig', [
+                'topic' => $topic,
+                'messages' => $messages,
+                'form'  =>  $form->createView()
+            ]);
         }
-
-        
-        return $this->render('forum/topic.html.twig', [
-            'topic' => $topic,
-            'messages' => $messages,
-            'form'  =>  $form->createView()
-        ]);
     }
 
     /**

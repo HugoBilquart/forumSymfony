@@ -29,7 +29,9 @@ class EditProfileDetailsType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
-                'label' => 'Country'
+                'label' => 'Country',
+                'required'   => false,
+                'empty_data' => NULL
             ])
 
             ->add('birth_date', DateType::class, [
@@ -39,16 +41,21 @@ class EditProfileDetailsType extends AbstractType
                 'label' => 'Birth date (YYYY-MM-DD)',
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                'required'   => false,
+                'empty_data' => ''
             ])
 
             ->add('biography', TextareaType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'rows' => "9", 
-                    'cols' => "45"
+                    'cols' => "45",
+                    'required' => false
                 ],
-                'label' => 'Biography'
+                'label' => 'Biography',
+                'required'   => false,
+                'empty_data' => NULL
             ])
 
             ->add('signature', TextareaType::class, [
@@ -57,7 +64,9 @@ class EditProfileDetailsType extends AbstractType
                     'rows' => "2", 
                     'cols' => "45"
                 ],
-                'label' => 'Signature'
+                'label' => 'Signature',
+                'required'   => false,
+                'empty_data' => NULL
             ])
 
             ->add('Confirm profile details', SubmitType::class, [

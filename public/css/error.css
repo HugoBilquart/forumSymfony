@@ -1,0 +1,26 @@
+#error-title b {
+    font-style: normal;
+    vertical-align: middle;
+}
+
+#error-title h1 {
+    color: #DD2E44;
+}
+
+#error {
+    padding: 5%;
+    
+}
+
+#error p {
+    font-size: xx-large;
+    color: #3498db;
+}
+
+.error-img {
+    width: 250px;  
+}
+
+p#not-content {
+    color: black;
+}

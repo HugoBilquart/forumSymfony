@@ -55,24 +55,36 @@ class UserController extends AbstractController
      */
     public function indexPage(UserRepository $userRepository,$page)
     {
-        $users = $userRepository->getUsers($page);
-        $countPage = $userRepository->countPage();
+        if(is_numeric($page)) {
+            $users = $userRepository->getUsers($page);
+            $countPage = $userRepository->countPage();
 
-        return $this->render('user/index.html.twig', [
-            'users' => $users,
-            'countPage' => $countPage,
-            'page' => $page
-        ]);
+            return $this->render('user/index.html.twig', [
+                'users' => $users,
+                'countPage' => $countPage,
+                'page' => $page
+            ]);
+        }
+        else {
+            return $this->redirectToRoute('users');
+        }
     }
 
     /**
-     * @Route("/user/{id}", name="profile")
+     * @Route("/user/{id}", name="profile", requirements={"id"="\d+"})
      */
-    public function profile(User $user)
+    public function profile(User $user = null)
     {
-        return $this->render('user/profile.html.twig', [
-            'data' => $user
-        ]);
+        if (empty($user)) {
+            return $this->render('exceptions/404.html.twig', [
+                'reason' => 'user'
+            ]);
+        }
+        else {
+            return $this->render('user/profile.html.twig', [
+                'data' => $user
+            ]);
+        }
     }
 
     /**
@@ -151,7 +163,7 @@ class UserController extends AbstractController
                 // Si l'ancien mot de passe est bon
                 if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
                     if(!preg_match('^\S*(?=\S{8,})(?=\S*[\d])\S*$^',$form->get('newPassword')->getData())) {
-                        $form->get('newPassword')->addError(new FormError("You're password isn't valid (At least 8 characters and at least 1 number)"));
+                        $form->get('newPassword')->addError(new FormError("You're password isn't strong enough (At least 8 characters and at least 1 number)"));
                         return $this->render('user/changePassword.html.twig', [
                             'form'  => $form->createView()
                         ]);

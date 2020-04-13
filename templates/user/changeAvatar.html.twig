@@ -16,21 +16,28 @@
 <!-- END Breadcrumb -->
 
 <div class="col-md-12">
-	<h1>Change your avatar</h1>
+	<h1 class="page-name">Change your avatar</h1>
 </div>
 <br/>
 <div class="col-md-12" id="avatar-form">
 	{{ form_start(form) }}
-	{{ form_rest(form) }}
-	{{ form_errors(form) }}
+		<p id="file-size"></p>
 	{{ form_end(form) }}
 </div>
 <script>
     $('#avatar_file').change(function(){
 		if(this.files[0].size > 1050000) {
 			alert("Image too large (max 1.5 Mo)");
-			$(this).val('')
-		}	
+			$('#file-size').addClass('failed');
+			$('#file-size').removeClass('success');
+			$('#file-size').text('⚠️ ' + (this.files[0].size/(1024*1024)).toFixed(2) + ' / 1.5 Mo');
+			$(this).val('');
+		}
+		else {
+			$('#file-size').removeClass('failed');
+			$('#file-size').addClass('success');
+			$('#file-size').text((this.files[0].size/(1024*1024)).toFixed(2) + ' / 1.5 Mo');
+		}
 	});
 </script>
     
