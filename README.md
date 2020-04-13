@@ -1,7 +1,8 @@
-# forumSymfony
+# Forum Symfony 4
 Portage du projet de forum PHP sur le framework Symfony 4
 
 ## Mise en place du projet
+- git clone du dépot
 - composer update
 
 ### Base de données - MySQL
