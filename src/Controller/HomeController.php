@@ -21,4 +21,12 @@ class HomeController extends AbstractController
             'birthdays' => $birthdays
         ]);
     }
+
+    /**
+     * @Route("/legalNotices", name="legalNotices")
+     */
+    public function legal()
+    {
+        return $this->render('home/legalnotices.html.twig');
+    }
 }
