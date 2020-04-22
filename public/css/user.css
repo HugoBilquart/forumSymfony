@@ -19,10 +19,20 @@ table.table-memberlist {
 
 #users tbody tr:focus, #users tbody tr:hover {
 	background-color: 	rgb(90, 90, 90);
-	text-shadow: 		0.5px 1px 5px white;
+	text-shadow: 		0.5px 1px 5px black;
 	border-left: 		solid 2px white;
 	border-right: 		solid 2px white;
 	cursor: 			pointer;
+}
+
+#tooltip {  
+    background-color: 		black;
+    color: 					white;
+    padding:				5px;
+	position: 				absolute;
+    max-width: 				100%;
+    border-radius: 			5px;
+	z-index:				1;
 }
 
 #users tbody tr:focus .online, #users tbody tr:hover .online {
@@ -58,13 +68,35 @@ a.filterLink:hover, a.memberlist-namelink:hover {
 img.memberlist-picture {
 	height: 					50px;
 	width: 						50px;
-
+	pointer-events: 			none;
+	cursor: 					default;
+	user-select: 				none;
 	/*height: 					10%;
 	width: 						10%;*/
 }
 
+.memberlist-member-role {
+	color:          rgb(0, 204, 255);
+	font-weight: 	bold;
+    text-shadow:    0.5px 1px 5px rgb(0, 0, 190);
+}
+
+.memberlist-moderator-role {
+    color: limegreen;
+    text-shadow:    0.5px 1px 5px green;
+}
+
+.memberlist-administrator-role {
+    color: red;
+    text-shadow:    0.5px 1px 5px rgb(100, 0, 0);
+}
+
 .online {
 	color: rgb(0, 211, 0);
+}
+
+#pagination a.disabled {
+	opacity: 0.3;
 }
 
 /* END Memberlist */

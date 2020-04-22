@@ -1,39 +1,42 @@
 <div class="row" id="menu">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="{{ path('home') }}" id="homepage-link">
-                <img src="{{ asset('img/favicon.png')}}" width="30" height="30" class="d-inline-block align-top" alt="MENU">
-                Homepage
-            </a>
-            <div class="navbar-collapse" id="menu-links" >
-                <ul class="navbar-nav">
-                    {% if app.user %}
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="{{ path('home') }}" id="home-button">
+            <img src="{{ asset('img/favicon.png')}}" width="30" height="30" class="d-inline-block align-top" alt="MENU">
+            Homepage
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('profile', {id: app.user.id}) }}">Your profile</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('forum') }}">Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('users') }}">Members</a>
+                </li>
+                {% if app.user %}
+                    {% if "ROLE_MODO" in app.user.roles %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('profile', {id: app.user.id}) }}">Your profile</a>
+                            <a class="nav-link" href="{{ path('management') }}">Management</a>
                         </li>
                     {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('forum') }}">Forum</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('users') }}">Members</a>
-                    </li>
-                    {% if app.user %}
-                        {% if "ROLE_MODO" in app.user.roles %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown link
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </li>
-                        {% endif %}
-                    {% endif %}
-                </ul>
-            </div>
+                {% endif %}
+            </ul>
         </div>
     </nav>
 </div>
+<script>
+    $(function(){ 
+        var navMain = $(".navbar-collapse");
+
+        navMain.on("click", "a", null, function () {
+            navMain.collapse('hide');
+        });
+    });
+</script>

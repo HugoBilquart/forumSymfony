@@ -4,75 +4,59 @@
 
 {% block body %}
 
-{% dump(app.user) %}
-{% dump(staff) %}
-{% dump(users) %}
-
 <!-- Breadcrumb -->
 <div class="col-sm-12" id="breadcrumb">
     <a href="{{ path('home') }}"><span>Home</span></a>
     >
-    <span>Staff management</span>
+    <span>Management</span>
 </div>
 <!-- END Breadcrumb -->
 
 <!-- Page name -->
 <div class="col-xl-12">
-    <h1 class="page-name">Staff management</h1>
+    <h1 class="page-name">Website management</h1>
 </div>
 <!-- END Page name -->
 
-<div class="col-md-12">
-    <h2>Staff</h2>
-</div>
-
-{% for user in staff %}
-    <div class="col-md-4 staffManagement">
-        <div class="row staffManagement-user">
-            <div class="col-xs-6">
-                <a href="{{ path('profile', {id: user.id}) }}"><img src="{{ asset('img/users/'~user.username~'.png') }}"></a>
-            </div>
-            <div class="col-xs-6 user-data">
-                <ul>
-                    <li>
-                        <span>{{ user.username }} <i>[ #{{ user.id }} ]</i></span>
-                    </li>
-                    <li>
-                        <p class="{{ user.roleStr(user.roles|last) }}-role">
-                            <b>{{ user.roleStr(user.roles|last)| title }}</b>
-                        </p>
-                    </li>
-                </ul>
-            </div>
+<div class="col-xl-12" id="management">
+    <div class="row">
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-md-4">
+        {% else %}
+            <div class="col-md-6">
+        {% endif %}
+            <figure>
+                <a href="">
+                    <img src="{{ asset('img/icons/user.png') }}" alt="user-icon">
+                </a>
+                <figcaption>User management</figcaption>
+            </figure>
         </div>
-    </div>
-{% endfor %}
+        
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-md-4">
+                <figure>
+                    <a href="{{ path('staff_management') }}">
+                        <img src="{{ asset('img/icons/user.png') }}" alt="staff-icon">
+                    </a>
+                    <figcaption>Staff management</figcaption>
+                </figure>
+            </div>
+        {% endif %}
 
-<hr>
-<div class="col-md-12">
-    <h2>Members</h2>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-md-4">
+        {% else %}
+            <div class="col-md-6">
+        {% endif %}
+            <figure>
+                <a href="">
+                    <img src="{{ asset('img/icons/forum.png') }}" alt="forum-icon">
+                </a>
+                <figcaption>Forum management</figcaption>
+            </figure>
+        </div>  
+    </div>
 </div>
-
-{% for user in users %}
-    <div class="col-md-4 staffManagement">
-        <div class="row staffManagement-user">
-            <div class="col-xs-6">
-                <a href="{{ path('profile', {id: user.id}) }}"><img src="{{ asset('img/users/'~user.username~'.png') }}"></a>
-            </div>
-            <div class="col-xs-6 user-data">
-                <ul>
-                    <li>
-                        <span>{{ user.username }} <i>[ #{{ user.id }} ]</i></span>
-                    </li>
-                    <li>
-                        <p class="{{ user.roleStr(user.roles|last) }}-role">
-                            <b>{{ user.roleStr(user.roles|last)| title }}</b>
-                        </p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-{% endfor %}
 
 {% endblock %}

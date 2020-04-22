@@ -57,23 +57,30 @@ class ForumController extends AbstractController
      */
     public function indexpage(TopicRepository $topicRepository, MessageRepository $messageRepository,$page)
     {
-        if(is_numeric($page)) {
+        if(is_numeric($page) && $page > 0) {
             $topics = $topicRepository->getTopicsData($page);
             $countPage = $topicRepository->countPage();
 
-            foreach ($topics as $key => $value) {
-                $countMessage = $messageRepository->getCountMessage($topics[$key]['id']);
-                $topics[$key]['countMessage'] = $countMessage;
-
-                $lastMessage = $messageRepository->getLastMessage($topics[$key]['id']);
-                $topics[$key]['lastMessage'] = $lastMessage;
+            if($page > $countPage) {
+                return $this->redirectToRoute('forum_page', array(
+                    'page' => $countPage
+                ));
             }
-
-            return $this->render('forum/index.html.twig', [
-                'topics' => $topics,
-                'countPage' => $countPage,
-                'page' => $page
-            ]);
+            else {
+                foreach ($topics as $key => $value) {
+                    $countMessage = $messageRepository->getCountMessage($topics[$key]['id']);
+                    $topics[$key]['countMessage'] = $countMessage;
+    
+                    $lastMessage = $messageRepository->getLastMessage($topics[$key]['id']);
+                    $topics[$key]['lastMessage'] = $lastMessage;
+                }
+    
+                return $this->render('forum/index.html.twig', [
+                    'topics' => $topics,
+                    'countPage' => $countPage,
+                    'page' => $page
+                ]);
+            }
         }
         else {
             return $this->redirectToRoute('forum');

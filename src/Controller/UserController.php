@@ -55,15 +55,22 @@ class UserController extends AbstractController
      */
     public function indexPage(UserRepository $userRepository,$page)
     {
-        if(is_numeric($page)) {
+        if(is_numeric($page) && $page > 0) {
             $users = $userRepository->getUsers($page);
             $countPage = $userRepository->countPage();
 
-            return $this->render('user/index.html.twig', [
-                'users' => $users,
-                'countPage' => $countPage,
-                'page' => $page
-            ]);
+            if($page > $countPage) {
+                return $this->redirectToRoute('users_page', array(
+                    'page' => $countPage
+                ));
+            }
+            else {
+                return $this->render('user/index.html.twig', [
+                    'users' => $users,
+                    'countPage' => $countPage,
+                    'page' => $page
+                ]);
+            }        
         }
         else {
             return $this->redirectToRoute('users');
@@ -196,6 +203,19 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/editAccount/informations/{id}", name="editAccount")
+     */
+    public function account(User $user, Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder, UserFunctions $userFunctions)
+    {
+        if($this->getUser() && $this->getUser() == $user) {
+            
+        }
+        else {
+            return $this->redirectToRoute('home');
+        }
+    }
+
+    /**
      * @Route("/register", name="register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer)
@@ -244,6 +264,15 @@ class UserController extends AbstractController
             'form' => $form->createView()
         ]);*/
     }
+
+    /**
+     * @Route("/check/available/{item}", name="available", condition="request.isXmlHttpRequest()")
+     */
+    public function available($item)
+    {
+        return 'POP';
+    }
+
 
     /**
      * @Route("/mail", name="mail")

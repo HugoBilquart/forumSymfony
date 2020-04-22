@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IT Solutions - Staff management{% endblock %}
+
+{% block body %}
+
+{% dump(app.user) %}
+{% dump(staff) %}
+{% dump(users) %}
+
+<!-- Breadcrumb -->
+<div class="col-sm-12" id="breadcrumb">
+    <a href="{{ path('home') }}"><span>Home</span></a>
+    >
+    <a href="{{ path('management') }}"><span>Management</span></a>
+    >
+    <span>Staff management</span>
+</div>
+<!-- END Breadcrumb -->
+
+<!-- Page name -->
+<div class="col-xl-12">
+    <h1 class="page-name">Staff management</h1>
+</div>
+<!-- END Page name -->
+
+{% if results is defined %}
+    <div class="col-md-12">
+        <p {% if 'ERROR' in results %} class="failed" {% else %} class="success" {% endif %}>
+            {{ results }}
+        </p>
+    </div>
+{% endif %}
+
+<div class="col-md-12 text-center">
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+
+<div class="col-md-12">
+    <h2>Staff</h2>
+</div>
+
+{% for user in staff %}
+    <div class="col-md-4 staffManagement">
+        <div class="row staffManagement-user">
+            <div class="col-xs-6">
+                <a href="{{ path('profile', {id: user.id}) }}"><img src="{{ asset('img/users/'~user.username~'.png') }}"></a>
+            </div>
+            <div class="col-xs-6 user-data">
+                <ul>
+                    <li>
+                        <span>{{ user.username }} <i>[ #{{ user.id }} ]</i></span>
+                    </li>
+                    <li>
+                        <p class="{{ user.roleStr(user.roles|last) }}-role">
+                            <b>{{ user.roleStr(user.roles|last)| title }}</b>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+<hr>
+<div class="col-md-12">
+    <h2>Members</h2>
+</div>
+
+{% for user in users %}
+    <div class="col-md-4 staffManagement">
+        <div class="row staffManagement-user">
+            <div class="col-xs-6">
+                <a href="{{ path('profile', {id: user.id}) }}"><img src="{{ asset('img/users/'~user.username~'.png') }}"></a>
+            </div>
+            <div class="col-xs-6 user-data">
+                <ul>
+                    <li>
+                        <span>{{ user.username }} <i>[ #{{ user.id }} ]</i></span>
+                    </li>
+                    <li>
+                        <p class="{{ user.roleStr(user.roles|last) }}-role">
+                            <b>{{ user.roleStr(user.roles|last)| title }}</b>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}
