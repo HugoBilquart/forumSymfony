@@ -75,6 +75,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return ceil($query->getSingleScalarResult());
     }*/
 
+    /** Fixture **/
+
+    public function getByRole($role) {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u.id')
+                ->from($this->_entityName, 'u')
+                ->where('u.roles LIKE :roles')
+                ->setParameter('roles', '%[' . $role . '%')
+                ->orderBy('u.username')
+            ;
+        return $qb->getQuery()->getResult();
+    }
+
+    /** END Fixture **/
+
     /** Forum functions **/
 
     public function birthdays($value)
@@ -118,12 +133,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     /** Staff management functions **/
 
-    public function getByRole($role) {
+    public function getFullUserByRole($role) {
         $qb = $this->_em->createQueryBuilder();
-        $qb->select('u.id')
+        $qb->select('u')
                 ->from($this->_entityName, 'u')
                 ->where('u.roles LIKE :roles')
-                ->setParameter('roles', '%[' . $role . '%')
+                ->setParameter('roles', '%[' . $role . ']%')
                 ->orderBy('u.username')
             ;
         return $qb->getQuery()->getResult();

@@ -6,6 +6,10 @@ body {
     margin: 					auto;
 }
 
+.container-fluid {
+    min-height: 100%;
+}
+
 h1,h2,h3,span,li,p {
     font-family:				main;
 }
@@ -83,6 +87,7 @@ h1,h2,h3,span,li,p {
 
 #logout-link {
     color: red;
+    text-shadow: 0.5px 1px 5px darkred;
     font-weight: bold;
     text-decoration: none;
     transition-duration: 0.5s;
@@ -212,7 +217,29 @@ hr {
     filter: drop-shadow(0 0 2rem black);
 }
 
-#homepage-link {
+#menu li.nav-item {
+    border-bottom: solid 5px teal;
+}
+
+#menu li.nav-item:hover {
+    background-color: rgb(55, 55, 255);
+    border-bottom: solid 5px steelblue;
+    height: 100%;
+}
+
+#home-button:hover img {
+    -moz-animation: spinHorizontal .8s linear;
+    -o-animation: spinHorizontal .8s linear;    
+    -webkit-animation: spinHorizontal .8s linear;
+    animation: spinHorizontal .8s linear;
+}
+
+@keyframes spinHorizontal {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+/*#homepage-link {
     padding: 2%;
     position: absolute;
     left: 0;
@@ -222,7 +249,7 @@ hr {
     height: 100%;
     border-bottom: solid 5px teal;
     border-collapse: collapse;
-}
+}*/
 
 /*#menu-links li:hover {
     border-bottom: solid 5px red;
